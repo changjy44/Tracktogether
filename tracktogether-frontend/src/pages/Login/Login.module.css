@@ -1,0 +1,37 @@
+.imagecontainer {
+  padding-top: 180px;
+}
+
+.image {
+  height: 200px;
+  width: 180px;
+}
+
+.form {
+  padding-top: 20px;
+}
+
+.field {
+  width: 250px;
+  height: 30px;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 25px 0px #888;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  padding-left: 30px;
+  font-size: 20px;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  padding: 3px;
+}
+
+.link {
+  font-size: 15px;
+  font-weight: 400;
+  padding-top: 10px;
+}

@@ -1,0 +1,23 @@
+.left {
+  flex-basis: 5%;
+}
+
+.right {
+  flex-grow: 1;
+}
+
+.header {
+  text-align: left;
+  /* padding-bottom: 1rem; */
+}
+
+.quote {
+  color: blue;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}

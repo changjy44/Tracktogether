@@ -1,0 +1,87 @@
+{
+  "group": [
+    {
+      "groupID": 26,
+      "image": "",
+      "log": [],
+      "name": "Final Group",
+      "users": [
+        {
+          "userID": "62852d14922165f203899595",
+          "username": "Test",
+          "contact": 999,
+          "amount": 0
+        },
+        {
+          "userID": "6296d34fb9f5fc8613765e15",
+          "username": "Chang",
+          "contact": 99118822,
+          "amount": 0
+        }
+      ]
+    },
+    {
+      "groupID": 27,
+      "image": "",
+      "log": [
+        {
+          "date": "2022-06-20T15:11:04.322Z",
+          "username": "Chang",
+          "userID": "6296d34fb9f5fc8613765e15",
+          "targetUsername": "Chang",
+          "amount": -11.5
+        },
+        {
+          "date": "2022-06-20T15:11:04.322Z",
+          "username": "Test",
+          "userID": "62852d14922165f203899595",
+          "targetUsername": "Chang",
+          "amount": 11.5
+        },
+        {
+          "date": "2022-06-20T15:11:12.151Z",
+          "username": "Chang",
+          "userID": "6296d34fb9f5fc8613765e15",
+          "targetUsername": "Chang",
+          "amount": -27.5
+        },
+        {
+          "date": "2022-06-20T15:11:12.151Z",
+          "username": "Test",
+          "userID": "62852d14922165f203899595",
+          "targetUsername": "Chang",
+          "amount": 27.5
+        },
+        {
+          "date": "2022-06-20T15:13:44.924Z",
+          "username": "Chang",
+          "userID": "6296d34fb9f5fc8613765e15",
+          "targetUsername": "Test",
+          "amount": 33
+        },
+        {
+          "date": "2022-06-20T15:13:44.925Z",
+          "username": "Test",
+          "userID": "62852d14922165f203899595",
+          "targetUsername": "Test",
+          "amount": -33
+        }
+      ],
+      "name": "Malaysia",
+      "users": [
+        {
+          "userID": "6296d34fb9f5fc8613765e15",
+          "username": "Chang",
+          "contact": 99118822,
+          "amount": -6
+        },
+        {
+          "userID": "62852d14922165f203899595",
+          "username": "Test",
+          "contact": 999,
+          "amount": 6
+        }
+      ]
+    }
+  ]
+}

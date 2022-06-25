@@ -1,0 +1,48 @@
+.left {
+  flex-basis: 5%;
+}
+
+.right {
+  flex-grow: 1;
+}
+
+.header {
+  text-align: left;
+  /* padding-bottom: 1rem; */
+}
+
+.noGroupMessage {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quote {
+  color: blue;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.groupImage {
+  /* padding: 2000; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
+}
+
+.groupCard {
+  cursor: pointer;
+  width: 12rem;
+  height: 12rem;
+}
+
+.groupCard:hover {
+  /* color: #fff; */
+  background-color: rgb(231, 231, 231);
+  /* border-color: #0d6efd; */
+}

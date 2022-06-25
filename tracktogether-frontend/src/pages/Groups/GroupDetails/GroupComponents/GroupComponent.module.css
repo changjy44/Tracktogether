@@ -1,0 +1,85 @@
+.newApp {
+  text-align: left;
+}
+.memberList {
+  text-align: left;
+  display: flex;
+}
+
+.memberListTitle {
+  background-color: rgb(231, 231, 231);
+}
+
+.tableLeftEntry {
+  display: inline;
+  margin-top: auto;
+  margin-bottom: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+.tableCenterEntry {
+  display: inline;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.left {
+  flex-basis: 5%;
+}
+
+.right {
+  flex-grow: 1;
+}
+
+.header {
+  text-align: left;
+  /* padding-bottom: 1rem; */
+}
+
+.quote {
+  color: blue;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.groupImage {
+  /* padding: 2000; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
+}
+
+.groupCard {
+  cursor: pointer;
+  width: 12rem;
+  height: 12rem;
+}
+
+.groupCard:hover {
+  /* color: #fff; */
+  background-color: rgb(231, 231, 231);
+  /* border-color: #0d6efd; */
+}
+
+.entryAmount {
+  color: chartreuse;
+}
+
+.success {
+  text-align: left;
+  color: rgb(0, 148, 0);
+}
+
+.warning {
+  text-align: left;
+  color: red;
+}

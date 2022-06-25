@@ -1,0 +1,33 @@
+.left {
+  flex-basis: 5%;
+}
+
+.right {
+  flex-grow: 1;
+}
+.paginationBar {
+  display: inline-flex;
+  /* align-items: center; */
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+.header {
+  text-align: left;
+}
+
+.quote {
+  color: blue;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.warningText {
+  margin-right: auto;
+  text-align: left;
+  color: red;
+}

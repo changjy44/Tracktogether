@@ -1,0 +1,19 @@
+.App {
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  justify-content: center;
+  background-color: #61dafb;
+  height: 100%;
+  overflow: auto;
+}
+
+label {
+  display: flex;
+  text-align: left;
+}
+
+/* p {
+  display: flex;
+  text-align: left;
+} */

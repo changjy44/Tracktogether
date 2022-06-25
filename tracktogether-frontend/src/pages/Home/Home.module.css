@@ -1,0 +1,23 @@
+.left {
+  flex-basis: 5%;
+}
+
+.right {
+  flex-grow: 1;
+}
+
+.header {
+  text-align: left;
+}
+
+.quote {
+  color: blue;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.spinner {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+}

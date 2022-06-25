@@ -34,14 +34,26 @@ db.mongoose
 
 app.use("/api", apiRouter);
 
-app.get("/", (req, res) => {
+app.get("/api/hello", (req, res) => {
   res.send("Hello world");
 });
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
+app.use(express.static(path.join(__dirname, "./tracktogether-frontend/build")));
 
+app.get("*", function (_, res) {
+  res.sendFile(
+    path.join(__dirname, "./tracktogether-frontend/build/index.html"),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
 
 app.listen(port, () => {
   console.log(`Server started on ${port}...`);
 });
+
