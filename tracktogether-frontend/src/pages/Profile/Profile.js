@@ -28,7 +28,7 @@ function Profile() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const url = "http://localhost:8080/api/account/";
+    const url = global.baseURL + "/api/account/";
     fetch(url, {
       method: "PUT",
       body: JSON.stringify({
@@ -77,7 +77,8 @@ function Profile() {
     imageData.append("id", authCtx.id);
     imageData.append("image", event.target.files[0]);
     console.log(imageData);
-    fetch("http://localhost:8080/api/account/upload", {
+    const url = global.baseURL + "/api/account/upload";
+    fetch(url, {
       method: "PUT",
       body: imageData,
       headers: {
@@ -111,7 +112,8 @@ function Profile() {
 
   const handleRemove = (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/api/account/remove", {
+    const url = global.baseURL + "/api/account/remove";
+    fetch(url, {
       method: "DELETE",
       headers: {
         authorization: "Bearer " + authCtx.token,

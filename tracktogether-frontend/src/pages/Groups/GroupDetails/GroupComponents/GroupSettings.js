@@ -72,7 +72,7 @@ function GroupSettings() {
   }
 
   function handleChangeGroupDetails() {
-    const url = "http://localhost:8080/api/group/";
+    const url = global.baseURL + "/api/group/";
     fetch(url, {
       method: "PUT",
       // body: JSON.stringify(base),

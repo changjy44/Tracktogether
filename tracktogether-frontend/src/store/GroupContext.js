@@ -23,7 +23,7 @@ export const GroupContextProvider = (props) => {
 
   console.log(group);
   if (!dataFetched && token != null) {
-    const url = "http://localhost:8080/api/group/summary/";
+    const url = global.baseURL + "/api/group/summary/";
     console.log("fetching data in group context");
     fetch(url, {
       method: "GET",

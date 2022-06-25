@@ -37,19 +37,10 @@ function LoginForm() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // authCtx.login('dummydata');
-    // navigation("/");
     setFormErrors(validate(credentials));
     setIsSubmit(true);
 
-    const baseURL =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:8080"
-        : "https://tracktogether.vercel.app/";
-
-    console.log(baseURL);
-    console.log(window.location.origin);
-    const url = baseURL + "/api/account/login";
+    const url = global.baseURL + "/api/account/login";
 
     console.log(url);
     fetch(url, {
@@ -68,14 +59,7 @@ function LoginForm() {
           return res.json();
         } else {
           return res.json().then((data) => {
-            // let errorMessage; // = 'Authentication failed!';
-            // console.log(JSON.stringify(data));
-            // if (data && data.error && data.error.message) {
-            //   errorMessage = data.error.message;
-            // }
-            // console.log(errorMessage);
             setFormErrors(logError(data.message));
-            // throw new Error(errorMessage);
           });
         }
       })
@@ -154,4 +138,3 @@ function LoginForm() {
   );
 }
 export default LoginForm;
-

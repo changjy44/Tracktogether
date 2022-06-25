@@ -25,7 +25,7 @@ export default function Alerts() {
     return () => {
       // console.log(" alert kena clicked");
       const entry = alert[index];
-      const url = "http://localhost:8080/api/account/alerts";
+      const url = global.baseURL + "/api/account/alerts";
       fetch(url, {
         method: "PUT",
         // body: JSON.stringify(base),

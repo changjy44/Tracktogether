@@ -62,8 +62,8 @@ function GroupMemberList() {
         setWarningText("You cannot remove a member with outstanding money!");
         return;
       }
+      const url = global.baseURL + "/api/group/delete-member";
 
-      const url = "http://localhost:8080/api/group/delete-member";
       fetch(url, {
         method: "PUT",
         // body: JSON.stringify(base),
@@ -101,7 +101,7 @@ function GroupMemberList() {
       setWarningText("Cannot reset payment if no one has outstanding money");
       return;
     }
-    const url = "http://localhost:8080/api/group/reset-payment";
+    const url = global.baseURL + "/api/group/reset-payment";
     fetch(url, {
       method: "POST",
       // body: JSON.stringify(base),

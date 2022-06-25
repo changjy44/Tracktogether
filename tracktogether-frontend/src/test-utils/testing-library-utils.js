@@ -8,8 +8,6 @@ import { GroupContextProvider } from "../store/GroupContext";
 // const propsGroupData = require("../store/GroupDummyContext.json");
 import { createMemoryHistory } from "history";
 
-const authToken = process.env.REACT_APP_AUTH_TOKEN;
-
 const customRender = (ui, routeHistory, initialRouteIndex, options) => {
   const history = createMemoryHistory({
     initialEntries: routeHistory,
@@ -17,17 +15,17 @@ const customRender = (ui, routeHistory, initialRouteIndex, options) => {
   });
   const AllTheProviders = ({ children }) => {
     return (
-      <AuthContextProvider token={authToken}>
-        <FilterContextProvider token={authToken}>
-          <GroupContextProvider token={authToken}> 
+      <AuthContextProvider>
+        <FilterContextProvider>
+          <GroupContextProvider>
             <Router history={history}>{children}</Router>
           </GroupContextProvider>
-         </FilterContextProvider>
-       </AuthContextProvider>
+        </FilterContextProvider>
+      </AuthContextProvider>
     );
   };
   const component = render(ui, { wrapper: AllTheProviders, ...options });
-  return {...component, history};
+  return { ...component, history };
 };
 
 // re-export everything
@@ -35,3 +33,4 @@ export * from "@testing-library/react";
 
 // override render method
 export { customRender as render };
+

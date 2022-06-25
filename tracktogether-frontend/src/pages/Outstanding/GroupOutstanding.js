@@ -26,7 +26,7 @@ export default function GroupOutstanding() {
       delete entry["groupName"];
       delete entry["groupID"];
       console.log(entry);
-      const url = "http://localhost:8080/api/group/acknowledge";
+      const url = global.baseURL + "/api/group/acknowledge";
       fetch(url, {
         method: "PUT",
         // body: JSON.stringify(base),

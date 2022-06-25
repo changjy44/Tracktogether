@@ -48,7 +48,8 @@ function Group() {
       if (groupCtx.validateGroupWithID(parseInt(groupToJoin))) {
         setJoinErrorMessage("You are already in the group");
       } else {
-        fetch("http://localhost:8080/api/group/join", {
+        const url = global.baseURL + "/api/group/join";
+        fetch(url, {
           method: "PUT",
           body: JSON.stringify({
             groupID: parseInt(groupToJoin),

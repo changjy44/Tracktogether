@@ -11,7 +11,8 @@ function AddGroupModal(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const url = "http://localhost:8080/api/group/";
+
+    const url = global.baseURL + "/api/group/";
     fetch(url, {
       method: "POST",
       body: JSON.stringify({

@@ -23,7 +23,7 @@ export default function MonitorPayments() {
     console.log("clicked button");
     return () => {
       const entry = alert[index];
-      const url = "http://localhost:8080/api/account/alerts";
+      const url = global.baseURL + "/api/account/alerts";
       fetch(url, {
         method: "PUT",
         // body: JSON.stringify(base),

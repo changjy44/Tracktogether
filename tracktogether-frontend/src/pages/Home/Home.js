@@ -50,16 +50,14 @@ function Home() {
     let isCancelled = false;
     console.log("entering home useEffect frame");
     const fetchData = async () => {
-      const quote_result = await fetch(
-        "http://localhost:8080/api/account/quote",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: "Bearer " + authCtx.token,
-          },
-        }
-      )
+      const url = global.baseURL + "/api/account/quote";
+      const quote_result = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + authCtx.token,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           let quote = data.data.quotes[getRndInteger(418)];

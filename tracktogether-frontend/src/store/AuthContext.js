@@ -15,7 +15,7 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const initialToken = localStorage.getItem("token") || props.token;
+  const initialToken = localStorage.getItem("token");
   console.log(initialToken);
 
   // const productionMode = typeof props.data === "undefined";
@@ -51,7 +51,7 @@ export const AuthContextProvider = (props) => {
     if (!token) {
       return;
     }
-    const url = "http://localhost:8080/api/account/refresh";
+    const url = global.baseURL + "/api/account/refresh";
     console.log("fetching data in auth context");
     setDataFetched(true);
     fetch(url, {

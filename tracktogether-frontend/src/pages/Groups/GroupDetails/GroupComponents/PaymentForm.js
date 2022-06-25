@@ -135,8 +135,7 @@ function PaymentForm() {
         status: true,
       });
     }
-
-    const url = "http://localhost:8080/api/group/initiate-payment";
+    const url = global.baseURL + "/api/group/initiate-payment";
     fetch(url, {
       method: "POST",
       // body: JSON.stringify(base),

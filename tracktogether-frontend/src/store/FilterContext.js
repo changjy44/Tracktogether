@@ -80,7 +80,7 @@ export const FilterContextProvider = (props) => {
   const [dataFetched, setDataFetch] = useState(false);
 
   function fetchAll() {
-    const url = "http://localhost:8080/api/account/transactions/";
+    const url = global.baseURL + "/api/account/transactions/";
     console.log("fetching data in personal ");
     console.log("fetching txnData");
     const txnData = fetch(url, {
@@ -105,7 +105,7 @@ export const FilterContextProvider = (props) => {
         setCurrData(`Unable to retrieve quote. Error: ${error}`)
       );
     console.log("fetching alertData");
-    const alertUrl = "http://localhost:8080/api/account/alerts/";
+    const alertUrl = global.baseURL + "/api/account/alerts/";
     const alertData = fetch(alertUrl, {
       method: "GET",
       headers: {
@@ -122,7 +122,7 @@ export const FilterContextProvider = (props) => {
         setCurrData(`Unable to retrieve quote. Error: ${error}`)
       );
     console.log("fetching adjustmentData");
-    const adjustmentUrl = "http://localhost:8080/api/account/adjustment/";
+    const adjustmentUrl = global.baseURL + "/api/account/adjustment/";
     const adjustmentData = fetch(adjustmentUrl, {
       method: "GET",
       headers: {

@@ -223,8 +223,7 @@ function SignUpForm() {
     // navigation("/");
     // setFormErrors(validate(credentials));
     setIsSubmit(true);
-
-    const url = "http://localhost:8080/api/account";
+    const url = global.baseURL + "/api/account";
     console.log(credentials.contactNo);
     fetch(url, {
       method: "POST",

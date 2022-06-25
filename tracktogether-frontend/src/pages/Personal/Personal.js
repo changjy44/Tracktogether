@@ -126,7 +126,7 @@ function Personal() {
     }
 
     setTransactionForm(false);
-    const url = "http://localhost:8080/api/account/transactions/";
+    const url = global.baseURL + "/api/account/transactions/";
     console.log(url);
     fetch(url, {
       method: "PUT",
