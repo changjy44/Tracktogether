@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 // import { FilterContextProvider } from "./store/FilterContext";
 
 const baseURL =
-  window.location.origin === "http://localhost:3000"
+  window.location.hostname === "localhost"
     ? "http://localhost:8080"
     : window.location.origin;
 

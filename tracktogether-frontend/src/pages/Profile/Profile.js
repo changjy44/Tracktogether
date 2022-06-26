@@ -2,19 +2,25 @@ import AuthContext from "../../store/AuthContext";
 import imageAvatar from "../../images/img_avatar.png";
 import Box from "../../components/Box";
 import styles from "./Profile.module.css";
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Form, Row, Col, Button, Image, Stack } from "react-bootstrap";
 // import EditIcon from "@mui/icons-material/Edit";
 // import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const authCtx = useContext(AuthContext);
-  const navigation = useNavigate();
+  // const navigation = useNavigate();
 
   const [username, setUserName] = useState(authCtx.username);
   const [contact, setContact] = useState(authCtx.contact);
   const [email, setEmail] = useState(authCtx.email);
+
+  useEffect(() => {
+    setUserName(authCtx.username);
+    setContact(authCtx.contact);
+    setEmail(authCtx.email);
+  }, [authCtx]);
   // const [image, setImage] = useState(authCtx.image);
 
   // const [imageName, setImageName] = useState(null);
@@ -58,12 +64,13 @@ function Profile() {
           });
         }
       })
-      .then((data) => {
+      .then(() => {
         // console.log(data.data.account);
         // authCtx.login(data.data.token);
-        authCtx.datalog(data.data.account);
+        // authCtx.datalog(data.data.account);
         // console.log('working');
-        navigation("/home");
+        location.reload();
+        // navigation("/home");
       })
       .catch((err) => {
         alert(err.message);
@@ -200,7 +207,7 @@ function Profile() {
                     <Form.Control
                       disabled
                       placeholder="Enter Name"
-                      value={authCtx.username}
+                      value={username}
                       onChange={(e) => setUserName(e.target.value)}
                     />
                   </Form.Group>
@@ -223,7 +230,7 @@ function Profile() {
                     <Form.Control
                       disabled={formState}
                       placeholder="Enter Contact"
-                      value={authCtx.contact}
+                      value={contact}
                       onChange={(e) => setContact(e.target.value)}
                     />
                   </Form.Group>
@@ -246,7 +253,7 @@ function Profile() {
                     <Form.Control
                       disabled={formState}
                       placeholder="Enter Email"
-                      value={authCtx.email}
+                      value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </Form.Group>

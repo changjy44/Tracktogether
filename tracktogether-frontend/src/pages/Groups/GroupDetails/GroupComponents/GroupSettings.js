@@ -102,7 +102,7 @@ function GroupSettings() {
   }
 
   function handleDeleteGroup() {
-    const url = "http://localhost:8080/api/group/delete-group";
+    const url = global.baseURL + "/api/group/delete-group";
     fetch(url, {
       method: "PUT",
       // body: JSON.stringify(base),
@@ -136,7 +136,7 @@ function GroupSettings() {
       return;
     }
 
-    const url = "http://localhost:8080/api/group/delete-member";
+    const url = global.baseURL + "/api/group/delete-member";
     fetch(url, {
       method: "PUT",
       // body: JSON.stringify(base),
@@ -169,7 +169,8 @@ function GroupSettings() {
     imageData.append("groupID", groupID);
     imageData.append("image", event.target.files[0]);
     console.log(imageData);
-    fetch("http://localhost:8080/api/group/upload", {
+    const url = global.baseURL + "/api/group/upload";
+    fetch(url, {
       method: "PUT",
       body: imageData,
       headers: {
@@ -203,7 +204,8 @@ function GroupSettings() {
 
   const handleRemove = (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/api/group/remove", {
+    const url = global.baseURL + "/api/group/remove";
+    fetch(url, {
       method: "DELETE",
       body: JSON.stringify({
         groupID: groupID,

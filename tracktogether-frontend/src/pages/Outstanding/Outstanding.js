@@ -23,10 +23,10 @@ function Outstanding() {
           <Tab eventKey="Personal" title="Personal">
             <PersonalOutstanding /*data={localData}*/ />
           </Tab>
-          <Tab eventKey="Group" title="Group">
+          <Tab eventKey="Group" title="Notifications">
             <GroupOutstanding /*data={localData}*/ />
           </Tab>
-          <Tab eventKey="Alerts" title="Payments Due">
+          <Tab eventKey="Alerts" title="Alerts">
             <Alerts /*data={localData}*/ />
           </Tab>
           <Tab eventKey="Monitor" title="Monitor Payments">

@@ -216,7 +216,7 @@ function Personal() {
   const [activeTab, setActiveTab] = useState(1);
   let items = [];
   const numberOfEntries = localData.length;
-  const entriesPerPage = 15;
+  const entriesPerPage = 10;
   const tabs = Math.ceil(numberOfEntries / entriesPerPage);
   for (let number = 1; number <= tabs; number++) {
     items.push(

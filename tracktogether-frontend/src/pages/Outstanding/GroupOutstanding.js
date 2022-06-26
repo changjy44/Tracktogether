@@ -60,7 +60,7 @@ export default function GroupOutstanding() {
       <Row className="align-items-center pb-3">
         <Col xs="auto">
           {" "}
-          <h2>Outstanding Payments</h2>
+          <h2>Notifications</h2>
         </Col>
         <Col xs="auto"> </Col>
       </Row>
