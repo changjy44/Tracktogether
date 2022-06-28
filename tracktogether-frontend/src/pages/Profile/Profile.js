@@ -80,15 +80,16 @@ function Profile() {
   const handleUpload = (event) => {
     event.preventDefault();
     // setImage(URL.createObjectURL(inputRef.current.files[0]));
-    const imageData = new FormData();
-    imageData.append("id", authCtx.id);
-    imageData.append("image", event.target.files[0]);
-    console.log(imageData);
+    const formData = new FormData();
+    formData.append("id", authCtx.id);
+    formData.append("image", event.target.files[0]);
+    console.log(formData);
     const url = global.baseURL + "/api/account/upload";
     fetch(url, {
       method: "PUT",
-      body: imageData,
+      body: formData,
       headers: {
+        // "Content-Type": "multipart/form-data",
         authorization: "Bearer " + authCtx.token,
       },
     })

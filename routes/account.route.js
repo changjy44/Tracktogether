@@ -5,7 +5,8 @@ const accountController = require("../controller/account.controller.js");
 const auth = require("../controller/auth");
 const { account } = require("../models/index.js");
 const { get } = require("./group.route.js");
-const { upload } = require("../helpers/filehelper");
+const { upload } = require("../utils/multer.js");
+const cloudinary = require("../utils/cloudinary.js");
 const db = require("../models");
 const Account = db.account;
 

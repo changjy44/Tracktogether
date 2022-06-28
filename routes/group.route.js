@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const groupController = require("../controller/group.controller.js");
 const auth = require("../controller/auth");
-const { upload } = require("../helpers/filehelper");
+const { upload } = require("../utils/multer");
 
 router.post(
   "/",
