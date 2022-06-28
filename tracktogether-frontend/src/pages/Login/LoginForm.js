@@ -8,6 +8,7 @@ import { purple } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import AuthContext from "../../store/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 function LoginForm() {
   const ColorButton = styled(Button)(({ theme }) => ({
@@ -24,6 +25,7 @@ function LoginForm() {
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
   const authCtx = useContext(AuthContext);
 
@@ -39,6 +41,7 @@ function LoginForm() {
     event.preventDefault();
     setFormErrors(validate(credentials));
     setIsSubmit(true);
+    setLoading(true);
 
     const url = global.baseURL + "/api/account/login";
 
@@ -101,7 +104,7 @@ function LoginForm() {
   return (
     <div className={styles.form}>
       <form onSubmit={handleSubmit}>
-        <p>
+        <div className={styles.input_container}>
           <img src={user} alt="user" className={styles.icon} />
           <input
             type="text"
@@ -111,8 +114,8 @@ function LoginForm() {
             value={credentials.username}
             onChange={handleChange}
           />
-        </p>
-        <p>
+        </div>
+        <div className={styles.input_container}>
           <img src={lock} alt="password" className={styles.icon} />
           <input
             type="password"
@@ -122,15 +125,20 @@ function LoginForm() {
             value={credentials.password}
             onChange={handleChange}
           />
-        </p>
+        </div>
+        <p></p>
         <div className="loginbutton">
-          <ColorButton variant="contained" type="submit">
-            Log In
-          </ColorButton>
+          {loading ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
+            <ColorButton variant="contained" type="submit">
+              Log In
+            </ColorButton>
+          )}
         </div>
       </form>
       <div className={styles.link}>
-        <a href="#">Forgot password?</a> or <Link to="/signup">Sign Up</Link>
+        <a href="/">Forgot password?</a> or <Link to="/signup">Sign Up</Link>
       </div>
       <span style={{ color: "red" }}>{formErrors.name}</span>
       <br />

@@ -297,7 +297,7 @@ function SignUpForm() {
   return (
     <div className={styles.form}>
       <form onSubmit={handleSubmit}>
-        <p>
+        <div className={styles.input_container}>
           <img src={user} alt="user" className={styles.icon} />
           <input
             type="text"
@@ -308,14 +308,15 @@ function SignUpForm() {
             onChange={handleChange}
             onBlur={handleUserBlur}
           />
-        </p>
+        </div>
+
         {displayUsernameError && (
           <p role="error" style={{ color: "red" }}>
             {credentialsIsValid.username.errorMessage}{" "}
           </p>
         )}
 
-        <p>
+        <div className={styles.input_container}>
           <img src={emailicon} alt="email" className={styles.icon} />
           <input
             type="email"
@@ -326,13 +327,14 @@ function SignUpForm() {
             onChange={handleChange}
             onBlur={handleUserBlur}
           />
-        </p>
+        </div>
         {displayEmailError && (
           <p role="error" style={{ color: "red" }}>
             {credentialsIsValid.email.errorMessage}{" "}
           </p>
         )}
-        <p>
+
+        <div className={styles.input_container}>
           <img src={phone} alt="contactNo" className={styles.icon} />
           <input
             type="number"
@@ -343,13 +345,14 @@ function SignUpForm() {
             onChange={handleChange}
             onBlur={handleUserBlur}
           />
-        </p>
+        </div>
         {displayContactNoError && (
           <p role="error" style={{ color: "red" }}>
             {credentialsIsValid.contactNo.errorMessage}{" "}
           </p>
         )}
-        <p>
+
+        <div className={styles.input_container}>
           <img src={lock} alt="password" className={styles.icon} />
           <input
             type="password"
@@ -360,13 +363,14 @@ function SignUpForm() {
             onChange={handleChange}
             onBlur={handleUserBlur}
           />
-        </p>
+        </div>
         {displayPasswordError && (
           <p role="error" style={{ color: "red" }}>
             {credentialsIsValid.password.errorMessage}{" "}
           </p>
         )}
-        <p>
+
+        <div className={styles.input_container}>
           <img src={lock} alt="password" className={styles.icon} />
           <input
             type="password"
@@ -377,7 +381,7 @@ function SignUpForm() {
             onChange={handleChange}
             onBlur={handleUserBlur}
           />
-        </p>
+        </div>
         {displayConfirmPasswordError && (
           <p role="error" style={{ color: "red" }}>
             {credentialsIsValid.password.errorMessage}{" "}

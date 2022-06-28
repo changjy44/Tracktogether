@@ -31,22 +31,19 @@
   font-size: 20px;
 }
 
+.input_container {
+  position: relative;
+  padding-top: 15px
+}
+
 .icon {
   height: 30px;
   width: 30px;
   position: absolute;
-  padding: 3px;
+  padding: 3px
 }
 
-/* .button {
-  width: 150px;
-  height: 30px;
-  border-radius: 60px;
-  background-color: #b103fc;
-  color: white;
-  font-size: 15px;
-  border: none;
-} */
+
 
 .link {
   font-size: 15px;

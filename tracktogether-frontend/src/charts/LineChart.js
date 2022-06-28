@@ -78,10 +78,10 @@ export default function LineChart(props) {
 
     let result = [];
     requiredMonths.forEach((month) => {
-      const item = arr.find((item) => month == months[item._id.month - 1]);
+      const item = arr.find((item) => month == months[item._id.month]);
       if (item) {
         const container = {};
-        container["month"] = months[item._id.month - 1];
+        container["month"] = months[item._id.month];
         container["amount"] = item.amount;
         result.push(container);
       } else {
