@@ -3,7 +3,10 @@ module.exports = (mongoose) => {
     {
       groupID: Number,
       name: String,
-      image: String,
+      image: {
+        url: String,
+        id: String,
+      },
       users: Array,
       log: Array,
     },

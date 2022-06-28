@@ -88,7 +88,7 @@ export const AuthContextProvider = (props) => {
           username: account.username,
           email: account.email,
           contact: account.contact,
-          image: account.image,
+          image: account.image.url,
         });
 
         console.log("Successfully refreshed!");

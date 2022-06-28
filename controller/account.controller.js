@@ -4,7 +4,9 @@ const db = require("../models");
 const multer = require("multer");
 const Account = db.account;
 const mongoose = require("mongoose");
-const quotes = require("../helpers/quotes.json");
+const quotes = require("../utils/quotes.json");
+const cloudinary = require("../utils/cloudinary.js");
+const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -117,14 +119,14 @@ exports.fetchQuote = async (req, res) => {
   });
 };
 
-exports.uploadImage = (req, res) => {
+exports.uploadImage = async (req, res) => {
   // console.log(req);
-  console.log(req.file.filename);
-  console.log(req.body.id);
+  // console.log(req.file.filename);
+  // console.log(req.body.id);
   let uniqueID = mongoose.Types.ObjectId(req.body.id);
-  const url = req.protocol + "://" + req.get("host");
+  // const url = req.protocol + "://" + req.get("host");
 
-  var account = Account.findOne({ _id: uniqueID }, (err, obj) => {
+  var account = Account.findOne({ _id: uniqueID }, async (err, obj) => {
     if (err) {
       return res.status(500).json({
         message: "Something went wrong! Error: " + err.message,
@@ -136,7 +138,27 @@ exports.uploadImage = (req, res) => {
         data: {},
       });
     } else {
-      obj.image = url + "/public/" + req.file.filename;
+      if (
+        obj.image !== null ||
+        obj.image !== {} ||
+        obj.image.id !== null ||
+        obj.image.id.length !== 0
+      ) {
+        await cloudinary.uploader
+          .destroy(obj.cloudinary_id)
+          .catch((err) => console.log(err));
+      }
+      console.log(req.file.path);
+      const result = await cloudinary.uploader.upload(req.file.path);
+      console.log(result);
+      // obj.image = url + "/public/" + req.file.filename;
+      console.log(result.secure_url);
+      console.log(result.public_id);
+      obj.image = {
+        url: result.secure_url,
+        id: result.public_id,
+      };
+      console.log(obj.image);
       obj
         .save(obj)
         .then((accountInfo) => {
@@ -155,9 +177,9 @@ exports.uploadImage = (req, res) => {
   });
 };
 
-exports.removeImage = (req, res) => {
+exports.removeImage = async (req, res) => {
   const uniqueID = req.body._id;
-  var account = Account.findOne({ _id: uniqueID }, (err, obj) => {
+  var account = Account.findOne({ _id: uniqueID }, async (err, obj) => {
     if (err) {
       return res.status(500).json({
         message: "Something went wrong! Error: " + err.message,
@@ -169,7 +191,20 @@ exports.removeImage = (req, res) => {
         data: {},
       });
     } else {
-      obj.image = "";
+      if (
+        obj.image !== null ||
+        obj.image !== {} ||
+        obj.image.id !== null ||
+        obj.image.id.length !== 0
+      ) {
+        await cloudinary.uploader
+          .destroy(obj.cloudinary_id)
+          .catch((err) => console.log(err));
+      }
+      obj.image = {
+        url: "",
+        id: "",
+      };
       obj
         .save(obj)
         .then((accountInfo) => {
