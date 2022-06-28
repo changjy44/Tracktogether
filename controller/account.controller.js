@@ -149,7 +149,9 @@ exports.uploadImage = async (req, res) => {
           .catch((err) => console.log(err));
       }
       console.log(req.file.path);
-      const result = await cloudinary.uploader.upload(req.file.path);
+      const result = await cloudinary.uploader
+        .upload(req.file.path)
+        .catch((err) => console.log(err));
       console.log(result);
       // obj.image = url + "/public/" + req.file.filename;
       console.log(result.secure_url);
