@@ -6,7 +6,6 @@ const Account = db.account;
 const mongoose = require("mongoose");
 const quotes = require("../utils/quotes.json");
 const cloudinary = require("../utils/cloudinary.js");
-const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -148,12 +147,11 @@ exports.uploadImage = async (req, res) => {
           .destroy(obj.cloudinary_id)
           .catch((err) => console.log(err));
       }
-      console.log(req.file.path);
+      // console.log(req.file.path);
       const result = await cloudinary.uploader.upload(req.file.path);
-      console.log(result);
-      // obj.image = url + "/public/" + req.file.filename;
-      console.log(result.secure_url);
-      console.log(result.public_id);
+      // console.log(result);
+      // console.log(result.secure_url);
+      // console.log(result.public_id);
       obj.image = {
         url: result.secure_url,
         id: result.public_id,

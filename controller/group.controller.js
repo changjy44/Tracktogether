@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../models");
 // const env = require("../config/env");
 const HelperFunction = require("./helper.controller");
+const cloudinary = require("../utils/cloudinary.js");
 const Group = db.group;
 const Archive = db.archive;
 const Account = db.account;
@@ -89,14 +90,14 @@ exports.updateGroup = (req, res) => {
   });
 };
 
-exports.uploadImage = (req, res) => {
+exports.uploadImage = async (req, res) => {
   // console.log(req);
-  console.log(req.file.filename);
-  console.log(req.body.groupID);
+  // console.log(req.file.filename);
+  // console.log(req.body.groupID);
   let groupID = parseInt(req.body.groupID);
-  const url = req.protocol + "://" + req.get("host");
+  // const url = req.protocol + "://" + req.get("host");
 
-  var account = Group.findOne({ groupID: groupID }, (err, obj) => {
+  var account = Group.findOne({ groupID: groupID }, async (err, obj) => {
     if (err) {
       return res.status(500).json({
         message: "Something went wrong! Error: " + err.message,
@@ -108,7 +109,24 @@ exports.uploadImage = (req, res) => {
         data: {},
       });
     } else {
-      obj.image = url + "/public/" + req.file.filename;
+      if (
+        obj.image !== null ||
+        obj.image !== {} ||
+        obj.image.id !== null ||
+        obj.image.id.length !== 0
+      ) {
+        await cloudinary.uploader
+          .destroy(obj.cloudinary_id)
+          .catch((err) => console.log(err));
+      }
+      // console.log(req.file.path);
+      const result = await cloudinary.uploader.upload(req.file.path);
+      // console.log(result);
+      obj.image = {
+        url: result.secure_url,
+        id: result.public_id,
+      };
+      console.log(obj.image);
       obj
         .save(obj)
         .then((accountInfo) => {
@@ -127,9 +145,9 @@ exports.uploadImage = (req, res) => {
   });
 };
 
-exports.removeImage = (req, res) => {
+exports.removeImage = async (req, res) => {
   const groupID = req.body.groupID;
-  var account = Group.findOne({ groupID: groupID }, (err, obj) => {
+  var account = Group.findOne({ groupID: groupID }, async (err, obj) => {
     if (err) {
       return res.status(500).json({
         message: "Something went wrong! Error: " + err.message,
@@ -141,7 +159,20 @@ exports.removeImage = (req, res) => {
         data: {},
       });
     } else {
-      obj.image = "";
+      if (
+        obj.image !== null ||
+        obj.image !== {} ||
+        obj.image.id !== null ||
+        obj.image.id.length !== 0
+      ) {
+        await cloudinary.uploader
+          .destroy(obj.cloudinary_id)
+          .catch((err) => console.log(err));
+      }
+      obj.image = {
+        url: "",
+        id: "",
+      };
       obj
         .save(obj)
         .then((accountInfo) => {
