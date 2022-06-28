@@ -4,25 +4,7 @@ import imageAvatar from "../../../../images/img_avatar.png";
 import AuthContext from "../../../../store/AuthContext";
 import GroupContext from "../../../../store/GroupContext";
 // import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import {
-  //   Tabs,
-  //   Tab,
-  // Table,
-  //   Stack,
-  Button,
-  Image,
-  Form,
-  Row,
-  Col,
-  Modal,
-  //   ListGroup,
-  //   CloseButton,
-  //   Container,
-  // Card,
-  // Image,
-  // Popover,
-  // OverlayTrigger,
-} from "react-bootstrap";
+import { Button, Image, Form, Row, Col, Modal, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 
 function GroupSettings() {
@@ -33,16 +15,18 @@ function GroupSettings() {
   console.log(authCtx);
   const groupID = parseInt(useParams().groupID);
 
-  const groupImageString = grpCtx.findImageWithID(groupID);
+  const groupImageURL = grpCtx.findImageWithID(groupID);
   const groupInformation = grpCtx.findGroupWithID(groupID);
 
   const [deleteShow, setDeleteShow] = useState(false);
   const [leaveShow, setLeaveShow] = useState(false);
 
-  const [groupImage, setGroupImage] = useState(groupImageString);
+  const [groupImage, setGroupImage] = useState(groupImageURL);
   const [currGroupName, setCurrGroupName] = useState(groupInformation.name);
 
   const [showUpdatedMessage, setShowUpdatedMessage] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const inputRef = useRef(null);
 
@@ -168,7 +152,9 @@ function GroupSettings() {
     const imageData = new FormData();
     imageData.append("groupID", groupID);
     imageData.append("image", event.target.files[0]);
-    console.log(imageData);
+
+    setLoading(true);
+
     const url = global.baseURL + "/api/group/upload";
     fetch(url, {
       method: "PUT",
@@ -204,6 +190,7 @@ function GroupSettings() {
 
   const handleRemove = (event) => {
     event.preventDefault();
+    setLoading(true);
     const url = global.baseURL + "/api/group/remove";
     fetch(url, {
       method: "DELETE",
@@ -272,27 +259,35 @@ function GroupSettings() {
         height="250"
       />
       <div className="m-3 d-flex align-items-center">
-        <input
-          ref={inputRef}
-          onChange={handleUpload}
-          className="d-none"
-          type="file"
-          accept="image/*"
-        />
-        <div style={{ paddingLeft: 30 }}>
-          <Button
-            onClick={() => {
-              inputRef.current?.click();
-            }}
-          >
-            Upload
-          </Button>
-        </div>
-        <div style={{ paddingLeft: 30 }}>
-          <Button variant="danger" onClick={handleRemove}>
-            Remove
-          </Button>
-        </div>
+        {loading ? (
+          <div style={{ paddingLeft: 100 }}>
+            <Spinner animation="border" variant="primary" />
+          </div>
+        ) : (
+          <>
+            <input
+              ref={inputRef}
+              onChange={handleUpload}
+              className="d-none"
+              type="file"
+              accept="image/*"
+            />
+            <div style={{ paddingLeft: 30 }}>
+              <Button
+                onClick={() => {
+                  inputRef.current?.click();
+                }}
+              >
+                Upload
+              </Button>
+            </div>
+            <div style={{ paddingLeft: 30 }}>
+              <Button variant="danger" onClick={handleRemove}>
+                Remove
+              </Button>
+            </div>
+          </>
+        )}
       </div>
       <Row className="my-4">
         <Col xs="auto">

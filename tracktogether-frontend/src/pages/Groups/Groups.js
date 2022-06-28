@@ -190,7 +190,11 @@ function Group() {
                   <Card.Body>
                     <Stack>
                       <Image
-                        src={imageAvatar}
+                        src={
+                          groupCtx.findImageWithID(entry.groupID)
+                            ? groupCtx.findImageWithID(entry.groupID)
+                            : imageAvatar
+                        }
                         roundedCircle
                         width="75"
                         height="75"
