@@ -62,6 +62,7 @@ function LoginForm() {
           return res.json();
         } else {
           return res.json().then((data) => {
+            setLoading(false);
             setFormErrors(logError(data.message));
           });
         }

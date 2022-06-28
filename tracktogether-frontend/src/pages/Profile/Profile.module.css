@@ -21,3 +21,8 @@
   overflow: auto;
   height: 100%;
 }
+
+.warning {
+  text-align: left;
+  color: red;
+}

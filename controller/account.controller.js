@@ -147,11 +147,9 @@ exports.uploadImage = async (req, res) => {
           .destroy(obj.cloudinary_id)
           .catch((err) => console.log(err));
       }
-      // console.log(req.file.path);
-      const result = await cloudinary.uploader.upload(req.file.path);
-      // console.log(result);
-      // console.log(result.secure_url);
-      // console.log(result.public_id);
+      const result = await cloudinary.uploader
+        .upload(req.file.path)
+        .catch((err) => console.log(err));
       obj.image = {
         url: result.secure_url,
         id: result.public_id,
