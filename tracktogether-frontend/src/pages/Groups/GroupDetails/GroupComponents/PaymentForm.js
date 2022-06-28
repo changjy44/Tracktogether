@@ -160,6 +160,9 @@ function PaymentForm() {
         grpCtx.updateGroupInformation(groupID, newGroupData);
         console.log("Successfully initiated payment");
         setShowSuccessText(true);
+        setShowAmountWarning(false);
+        setShowMemberWarning(false);
+        setShowSelfPaymentWarning(false);
         refresh();
       });
   }

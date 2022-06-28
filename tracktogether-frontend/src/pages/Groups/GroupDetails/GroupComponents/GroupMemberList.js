@@ -52,6 +52,7 @@ function GroupMemberList() {
     return () => {
       if (username === authCtx.username) {
         setShowWarning(true);
+        setShowSuccess(false);
         setWarningText("You cannot remove yourself!");
         return;
       }
@@ -59,6 +60,7 @@ function GroupMemberList() {
 
       if (amountOwed !== 0) {
         setShowWarning(true);
+        setShowSuccess(false);
         setWarningText("You cannot remove a member with outstanding money!");
         return;
       }
@@ -98,6 +100,7 @@ function GroupMemberList() {
       groupInformation.length
     ) {
       setShowWarning(true);
+      setShowSuccess(false);
       setWarningText("Cannot reset payment if no one has outstanding money");
       return;
     }

@@ -93,10 +93,15 @@ function Home() {
         <h2 className={styles.header}>Welcome Mr {authCtx.username}!</h2>
         <Container>
           <Row>
-            <Col>
+            <Col className="my-3" sm={12} md={4}>
               <DonutChart data={data.pieData} />
             </Col>
-            <Col style={{ position: "relative" }}>
+            <Col
+              className="my-3"
+              sm={12}
+              md={4}
+              style={{ position: "relative" }}
+            >
               {data.quote.length != 0 ? (
                 <LineChart data={data.lineData} />
               ) : (
@@ -105,7 +110,12 @@ function Home() {
                 </div>
               )}
             </Col>
-            <Col style={{ position: "relative" }}>
+            <Col
+              className="my-3"
+              sm={12}
+              md={4}
+              style={{ position: "relative" }}
+            >
               {data.quote.length == 0 ? (
                 <div className={styles.spinner}>
                   <Spinner animation="border" variant="primary" />
