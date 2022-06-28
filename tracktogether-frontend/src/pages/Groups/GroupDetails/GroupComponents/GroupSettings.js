@@ -17,6 +17,7 @@ function GroupSettings() {
 
   const groupImageURL = grpCtx.findImageWithID(groupID);
   const groupInformation = grpCtx.findGroupWithID(groupID);
+  console.log(groupImageURL);
 
   const [deleteShow, setDeleteShow] = useState(false);
   const [leaveShow, setLeaveShow] = useState(false);
@@ -34,11 +35,10 @@ function GroupSettings() {
     console.log("groupCtx has changed!");
 
     const groupInformation = grpCtx.findGroupWithID(groupID);
-    const groupImageString = grpCtx.findImageWithID(groupID);
+    const groupImageURL = grpCtx.findImageWithID(groupID);
     // console.log(groupInformation);
-    console.log(groupImageString);
     setCurrGroupName(groupInformation.name);
-    setGroupImage(groupImageString);
+    setGroupImage(groupImageURL);
   }, [grpCtx]);
 
   // console.log(setCurrGroupName);

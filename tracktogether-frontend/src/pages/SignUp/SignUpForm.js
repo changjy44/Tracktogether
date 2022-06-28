@@ -271,7 +271,7 @@ function SignUpForm() {
         navigation("/");
       })
       .catch((err) => {
-        alert(err.message);
+        console.log(err.message);
       });
   }
 

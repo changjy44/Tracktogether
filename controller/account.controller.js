@@ -14,29 +14,44 @@ function createToken(id, email) {
 }
 
 exports.createAccount = (req, res) => {
-  const account = new Account({
-    username: req.body.username,
-    email: req.body.email,
-    contact: req.body.contact,
-    password: req.body.password,
-  });
-
-  account
-    .save(account)
-    .then((accountInfo) => {
-      let token = createToken(accountInfo._id, accountInfo.email);
-
-      return res.status(200).json({
-        message: "Account successfully created",
-        data: { token: token, account: accountInfo },
-      });
-    })
-    .catch((err) => {
+  const username = req.body.username;
+  Account.findOne({ username: username }, (err, obj) => {
+    if (err) {
       return res.status(500).json({
         message: "Something went wrong! Error: " + err.message,
         data: {},
       });
-    });
+    } else if (obj) {
+      return res.status(500).json({
+        message: "Please choose another username as it has been taken",
+        data: {},
+      });
+    } else {
+      const account = new Account({
+        username: req.body.username,
+        email: req.body.email,
+        contact: req.body.contact,
+        password: req.body.password,
+      });
+
+      account
+        .save(account)
+        .then((accountInfo) => {
+          let token = createToken(accountInfo._id, accountInfo.email);
+
+          return res.status(200).json({
+            message: "Account successfully created",
+            data: { token: token, account: accountInfo },
+          });
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            message: "Something went wrong! Error: " + err.message,
+            data: {},
+          });
+        });
+    }
+  });
 };
 
 exports.updateAccount = (req, res) => {
@@ -144,7 +159,7 @@ exports.uploadImage = async (req, res) => {
         obj.image.id.length !== 0
       ) {
         await cloudinary.uploader
-          .destroy(obj.cloudinary_id)
+          .destroy(obj.image.id)
           .catch((err) => console.log(err));
       }
       const result = await cloudinary.uploader
@@ -194,7 +209,7 @@ exports.removeImage = async (req, res) => {
         obj.image.id.length !== 0
       ) {
         await cloudinary.uploader
-          .destroy(obj.cloudinary_id)
+          .destroy(obj.image.id)
           .catch((err) => console.log(err));
       }
       obj.image = {

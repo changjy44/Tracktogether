@@ -116,7 +116,7 @@ exports.uploadImage = async (req, res) => {
         obj.image.id.length !== 0
       ) {
         await cloudinary.uploader
-          .destroy(obj.cloudinary_id)
+          .destroy(obj.image.id)
           .catch((err) => console.log(err));
       }
       // console.log(req.file.path);
@@ -166,7 +166,7 @@ exports.removeImage = async (req, res) => {
         obj.image.id.length !== 0
       ) {
         await cloudinary.uploader
-          .destroy(obj.cloudinary_id)
+          .destroy(obj.image.id)
           .catch((err) => console.log(err));
       }
       obj.image = {

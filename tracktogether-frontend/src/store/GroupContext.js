@@ -81,8 +81,9 @@ export const GroupContextProvider = (props) => {
   };
 
   const findImageWithID = (groupID) => {
-    const grp = group.filter((item) => item.groupID == groupID);
-    return grp[0].image ? group[0].image.url : "";
+    const grp = group.filter((item) => item.groupID === parseInt(groupID));
+    const image = grp[0].image;
+    return image ? image.url : "";
   };
 
   const findUserIDWithName = (groupID, username) => {
