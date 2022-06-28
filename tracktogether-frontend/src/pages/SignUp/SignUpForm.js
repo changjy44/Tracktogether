@@ -160,7 +160,7 @@ function SignUpForm() {
       case "cfmPassword":
         if (isEmpty(value)) {
           newCredentialsValid.cfmPassword.errorMessage =
-            "Please enter a nonempty cfmPassword!";
+            "Please enter a nonempty password!";
           newCredentialsValid.cfmPassword.isValid = false;
         } else if (value != credentials.password) {
           newCredentialsValid.cfmPassword.errorMessage =
@@ -193,6 +193,8 @@ function SignUpForm() {
   const displayConfirmPasswordError =
     credentialsIsValid.cfmPassword.isTouched &&
     !credentialsIsValid.cfmPassword.isValid;
+
+  console.log(displayConfirmPasswordError);
 
   const formValidity =
     credentialsIsValid.username.isValid &&
@@ -382,9 +384,15 @@ function SignUpForm() {
             onBlur={handleUserBlur}
           />
         </div>
-        {displayConfirmPasswordError && (
+        {/* {displayConfirmPasswordError && (
           <p role="error" style={{ color: "red" }}>
             {credentialsIsValid.password.errorMessage}{" "}
+          </p>
+        )} */}
+
+        {displayConfirmPasswordError && (
+          <p role="error" style={{ color: "red" }}>
+            {credentialsIsValid.cfmPassword.errorMessage}{" "}
           </p>
         )}
 
