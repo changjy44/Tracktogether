@@ -40,6 +40,7 @@ function Personal() {
         .reduce((curr, next) => curr + next.amount, 0)
         .toFixed(2)
     );
+    setFilterArray(filterCtx.optionState);
   }, [filterCtx]);
 
   const [sortCategory, setSortCategory] = useState("Date");
@@ -164,23 +165,35 @@ function Personal() {
       });
   };
 
-  const [filterArray, setFilterArray] = useState([]);
+  const [filterArray, setFilterArray] = useState(filterCtx.optionState);
 
   const addFilterHandler = () => {
-    filterCtx.addFilter();
-    setFilterArray([
-      ...filterArray,
-      {
-        displayComponent: (
-          <FilterComponent
-            index={filterArray.length}
-            localData={localData}
-            setLocalData={setLocalData}
-            setActiveTab={setActiveTab}
-          />
-        ),
-      },
-    ]);
+    const json = {
+      displayComponent: (
+        <FilterComponent
+          index={filterArray.length}
+          localData={localData}
+          setLocalData={setLocalData}
+          setActiveTab={setActiveTab}
+        />
+      ),
+    };
+
+    filterCtx.addFilter(json);
+
+    // setFilterArray([
+    //   ...filterArray,
+    //   {
+    //     displayComponent: (
+    //       <FilterComponent
+    //         index={filterArray.length}
+    //         localData={localData}
+    //         setLocalData={setLocalData}
+    //         setActiveTab={setActiveTab}
+    //       />
+    //     ),
+    //   },
+    // ]);
   };
   const removeFilterHandler = () => {
     filterCtx.deleteAllFilter();
@@ -251,6 +264,7 @@ function Personal() {
     let newData = filterCtx.filterAll(0);
     // newData = sortStream(newData, sortCategory, sortDirection);
     setLocalData(newData);
+
     // sortCategoryHandler(sortCategory, sortDirection);
   };
 

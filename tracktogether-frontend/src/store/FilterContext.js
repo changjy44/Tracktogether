@@ -9,13 +9,11 @@ const currData = [
   {date: '2022-03-31', category: 'Transport', amount: 40, information: 'Top Up Card', mode: 'Bank'},
   {date: '2021-11-02', category: 'Transport', amount: 30, information: 'Top Up Paylah', mode: 'Bank'}
 ]
-
 const alertData = [
   {group: '27', user: 'Test', contact: 999, amount: -16.5, payeeHasPaid: false},
   {group: '27', user: 'Test', contact: 999, amount: -27.5, payeeHasPaid: false},
   {group: '27', user: 'Test', contact: 999, amount: -38.5, payeeHasPaid: false}
 ]
-
 const adjustmentData = [
   {date: '2022-06-14T14:41:50.493Z', information: 'Group information not recorded', category: 'Food', amount: -26, mode: 'Groups'},
   {date: '2022-06-14T14:52:21.124Z', information: 'Group information not recorded', category: 'Food', amount: -82, mode: 'Groups'},
@@ -23,15 +21,12 @@ const adjustmentData = [
   {date: '2022-06-14T14:53:17.727Z', information: 'Group information not recorded', category: 'Food', amount: -66.67, mode: 'Groups'},
   {date: '2022-06-15T04:30:26.712Z', information: 'Group information not recorded', category: 'Food', amount: -20, mode: 'Groups'}
 ]
-
 const propsFilterData = {
   currData: currData,
   alertData: alertData,
   adjustmentData: adjustmentData
 }
-
 <FilterContextProvider data={propsFilterData}> 
-
 </FilterContextProvider>
 */
 
@@ -176,10 +171,11 @@ export const FilterContextProvider = (props) => {
   if (!dataFetched && initialToken != null) {
     fetchAll();
   }
-  const addFilter = () => {
+  const addFilter = (json) => {
     const newState = [
       ...optionState,
       {
+        ...json,
         filterVariable: "Date",
         dateYear: "All",
         dateMonth: "All",

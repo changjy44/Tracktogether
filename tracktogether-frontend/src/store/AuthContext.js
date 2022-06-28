@@ -16,25 +16,6 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
   const initialToken = localStorage.getItem("token");
-  console.log(initialToken);
-
-  // const productionMode = typeof props.data === "undefined";
-
-  // const [token, setToken] = useState(productionMode ? initialToken : null);
-
-  // const [accountDetails, setAccountDetails] = useState(
-  //   productionMode
-  //     ? {
-  //         id: null,
-  //         username: null,
-  //         email: null,
-  //         contact: null,
-  //         image: null,
-  //       }
-  //     : props.data.accountDetails
-  // );
-
-  // const [dataFetched, setDataFetched] = useState(productionMode ? false : true);
   const [token, setToken] = useState(initialToken);
   const [accountDetails, setAccountDetails] = useState({
     id: null,
@@ -45,14 +26,12 @@ export const AuthContextProvider = (props) => {
   });
 
   const [dataFetched, setDataFetched] = useState(false);
-  // console.log(accountDetails);
 
   const fetchData = (token) => {
     if (!token) {
       return;
     }
     const url = global.baseURL + "/api/account/refresh";
-    console.log("fetching data in auth context");
     setDataFetched(true);
     fetch(url, {
       method: "GET",
