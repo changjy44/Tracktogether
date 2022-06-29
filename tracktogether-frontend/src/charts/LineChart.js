@@ -28,14 +28,18 @@ export default function LineChart(props) {
   }
 
   function subtractMonths(numOfMonths, date = new Date()) {
+    var d = date.getDate();
     date.setMonth(date.getMonth() - numOfMonths);
+    if (date.getDate() != d) {
+      date.setDate(0);
+    }
     return date;
   }
   // console.log(props);
   function filterAndSortDates(arr) {
     const filteredArr = arr.filter(
       (item) =>
-        new Date(`${item._id.year}-${item._id.month}`) > subtractMonths(6)
+        new Date(`${item._id.year}-${item._id.month}`) >= subtractMonths(6)
     );
     // console.log(filtered_arr);
 
@@ -47,12 +51,15 @@ export default function LineChart(props) {
     return sortedArr;
   }
 
-  function getPastMonths(date, n) {
+  function getPastMonths(n) {
     let result = [];
+    // const currMonth = new Date().getMonth();
     for (let i = n; i >= 0; i--) {
+      // let rel_month = currMonth - i;
+      // let abs_month = rel_month >= 0 ? rel_month : rel_month + 12;
+      // result.push(abs_month);
       result.push(subtractMonths(i).getMonth());
     }
-    // console.log(result);
     return result;
   }
 
@@ -72,9 +79,7 @@ export default function LineChart(props) {
       "December",
     ];
 
-    const requiredMonths = getPastMonths(new Date(), 5).map(
-      (item) => months[item]
-    );
+    const requiredMonths = getPastMonths(5).map((item) => months[item]);
 
     let result = [];
     requiredMonths.forEach((month) => {
