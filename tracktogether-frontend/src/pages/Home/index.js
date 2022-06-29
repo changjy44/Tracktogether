@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Template from "../../components/Template";
-// import styles from "./Home.module.css";
+import AuthContext from "../../store/AuthContext";
 import Home from "./Home";
+import Loading from "../../components/Loading/Loading";
+// import { Spinner } from "react-bootstrap";
 
 function HomeCard() {
-  return (
+  const authCtx = useContext(AuthContext);
+
+  return authCtx.authIsLoading ? (
+    <Loading />
+  ) : (
     <Template>
       <Home />
     </Template>

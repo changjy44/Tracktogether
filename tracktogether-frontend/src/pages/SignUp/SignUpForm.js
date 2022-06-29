@@ -5,7 +5,7 @@ import phone from "../../images/phone.png";
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./SignUp.module.css";
 // import Button from "@mui/material/Button";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 // import { purple } from "@mui/material/colors";
 // import { styled } from "@mui/material/styles";
 import AuthContext from "../../store/AuthContext";
@@ -152,6 +152,13 @@ function SignUpForm() {
           newCredentialsValid.password.errorMessage =
             "Please enter at least 8 characters for password!";
           newCredentialsValid.password.isValid = false;
+        } else if (
+          credentials.cfmPassword &&
+          value != credentials.cfmPassword
+        ) {
+          newCredentialsValid.password.errorMessage =
+            "Your passwords must match!";
+          newCredentialsValid.password.isValid = false;
         } else {
           newCredentialsValid.password.errorMessage = "";
           newCredentialsValid.password.isValid = true;
@@ -225,8 +232,9 @@ function SignUpForm() {
     // navigation("/");
     // setFormErrors(validate(credentials));
     setIsSubmit(true);
+
     const url = global.baseURL + "/api/account";
-    console.log(credentials.contactNo);
+    setLoading(true);
     fetch(url, {
       method: "POST",
       body: JSON.stringify({
@@ -257,6 +265,7 @@ function SignUpForm() {
             //   setFormErrors(errorMessage);
             // }
             // console.log(errorMessage);
+            setLoading(false);
             setFormErrors(data.message);
 
             // throw new Error(errorMessage);
@@ -266,6 +275,7 @@ function SignUpForm() {
       .then((data) => {
         // console.log(data.data.account);
         authCtx.login(data.data.token);
+        setLoading(false);
         // authCtx.datalog(data.data.account);
         console.log("working");
         navigation("/");
@@ -282,19 +292,7 @@ function SignUpForm() {
     }
   }, [formErrors]);
 
-  // const validate = (values) => {
-  //   const errors = {};
-  //   if (
-  //     !values.username ||
-  //     !values.email ||
-  //     !values.contactNo ||
-  //     !values.password ||
-  //     !values.cfmPassword
-  //   ) {
-  //     errors.name = "Please key in all required fields";
-  //   }
-  //   return errors;
-  // };
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className={styles.form}>
@@ -396,14 +394,28 @@ function SignUpForm() {
           </p>
         )}
 
-        <Button
-          size="lg"
-          className="m-3"
-          disabled={!formValidity}
-          type="submit"
-        >
-          Sign Up
-        </Button>
+        {loading ? (
+          <Button size="lg" className="m-3" disabled>
+            Signing Up
+            <Spinner
+              className="mx-2 py-1"
+              animation="border"
+              as="span"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          </Button>
+        ) : (
+          <Button
+            size="lg"
+            className="m-3"
+            disabled={!formValidity}
+            type="submit"
+          >
+            Sign Up
+          </Button>
+        )}
       </form>
       <div className={styles.link}>
         <span>Already have an account?</span> <Link to="/">Login</Link>

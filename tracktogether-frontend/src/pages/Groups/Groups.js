@@ -18,7 +18,9 @@ import {
   Image,
   Popover,
   OverlayTrigger,
+  Spinner,
 } from "react-bootstrap";
+import PageLoading from "../../components/Loading/PageLoading";
 
 function Group() {
   const authCtx = useContext(AuthContext);
@@ -49,6 +51,7 @@ function Group() {
         setJoinErrorMessage("You are already in the group");
       } else {
         const url = global.baseURL + "/api/group/join";
+        setJoinLoading(true);
         fetch(url, {
           method: "PUT",
           body: JSON.stringify({
@@ -83,6 +86,7 @@ function Group() {
             const newGroups = [...groups];
             newGroups.push(data.data.group);
             console.log(newGroups);
+            setJoinLoading(false);
             setGroups(newGroups);
           });
         // .catch((err) => {
@@ -139,8 +143,8 @@ function Group() {
     addGroupForm: addGroupForm,
     handleClose: handleClose,
   };
-
-  return (
+  const [joinLoading, setJoinLoading] = useState(false);
+  return groupCtx.isDataFetched ? (
     <div className={styles.right}>
       <Box>
         <Row className="align-items-center pb-3">
@@ -164,7 +168,21 @@ function Group() {
               placement="right"
               overlay={popover}
             >
-              <Button onClick={handleJoin}>Join</Button>
+              {joinLoading ? (
+                <Button>
+                  Joining
+                  <Spinner
+                    className="mx-2 py-1"
+                    animation="border"
+                    as="span"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                </Button>
+              ) : (
+                <Button onClick={handleJoin}>Join</Button>
+              )}
             </OverlayTrigger>
           </Col>
           <Col xs="auto">
@@ -212,6 +230,12 @@ function Group() {
         </Row>
       </Box>
       <AddGroupModal formProps={formProps} childToParent={childToParent} />
+    </div>
+  ) : (
+    <div className={styles.right}>
+      <Box>
+        <PageLoading />
+      </Box>
     </div>
   );
 }

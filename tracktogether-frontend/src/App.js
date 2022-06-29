@@ -24,8 +24,12 @@ function App() {
       <GroupContextProvider>
         <FilterContextProvider>
           <Routes>
-            <Route exact path="/" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
+            {!authCtx.isLoggedIn && (
+              <Route exact path="/" element={<Login />} />
+            )}
+            {!authCtx.isLoggedIn && (
+              <Route path="/signup" element={<SignUp />} />
+            )}
             {authCtx.isLoggedIn && <Route path="/Home" element={<Home />} />}
 
             {authCtx.isLoggedIn && (
@@ -48,7 +52,12 @@ function App() {
             {authCtx.isLoggedIn && (
               <Route path="/bank-sync" element={<Bank />} />
             )}
-            <Route path="*" element={<Navigate to="/" />} />
+            {!authCtx.isLoggedIn && (
+              <Route path="*" element={<Navigate to="/" />} />
+            )}
+            {authCtx.isLoggedIn && (
+              <Route path="*" element={<Navigate to="/Home" />} />
+            )}
           </Routes>
         </FilterContextProvider>
       </GroupContextProvider>

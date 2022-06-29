@@ -25,6 +25,7 @@ export const AuthContextProvider = (props) => {
     image: null,
   });
 
+  const [authIsLoading, setAuthIsLoading] = useState(false);
   const [dataFetched, setDataFetched] = useState(false);
 
   const fetchData = (token) => {
@@ -33,6 +34,7 @@ export const AuthContextProvider = (props) => {
     }
     const url = global.baseURL + "/api/account/refresh";
     setDataFetched(true);
+    setAuthIsLoading(true);
     fetch(url, {
       method: "GET",
       // body: JSON.stringify(base),
@@ -69,6 +71,7 @@ export const AuthContextProvider = (props) => {
           contact: account.contact,
           image: account.image ? account.image.url : "",
         });
+        setAuthIsLoading(false);
 
         console.log("Successfully refreshed!");
       })
@@ -113,6 +116,7 @@ export const AuthContextProvider = (props) => {
     contact: accountDetails.contact,
     image: accountDetails.image,
     isLoggedIn: userIsLoggedIn,
+    authIsLoading: authIsLoading,
     isDataFetched: dataFetched,
 
     login: loginHandler,

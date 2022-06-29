@@ -15,6 +15,7 @@ import {
   // Form,
   Row,
   Col,
+  Spinner,
   //   ListGroup,
   // CloseButton,
   //   Container,
@@ -105,6 +106,7 @@ function GroupMemberList() {
       return;
     }
     const url = global.baseURL + "/api/group/reset-payment";
+    setLoading(true);
     fetch(url, {
       method: "POST",
       // body: JSON.stringify(base),
@@ -129,6 +131,7 @@ function GroupMemberList() {
         console.log("Successfully reset payment");
         setShowWarning(false);
         setShowSuccess(true);
+        setLoading(false);
         filterCtx.setDataFetch(false);
         // authCtx.fetchData(initialToken);
         // location.reload();
@@ -150,7 +153,8 @@ function GroupMemberList() {
     return amount;
   }
 
-  console.log(groupInformation);
+  const [loading, setLoading] = useState(false);
+
   return (
     <React.Fragment style={{ overflow: "auto" }}>
       <Row className="align-items-center pb-3">
@@ -158,20 +162,25 @@ function GroupMemberList() {
           <h2 className={styles.header}>Group Members</h2>{" "}
         </Col>
         <Col xs="auto">
-          <Button variant="warning" onClick={handleResetPayments}>
-            {" "}
-            Reset Payments{" "}
-          </Button>
+          {loading ? (
+            <Button variant="warning" className="py-2" disabled>
+              Reseting payment
+              <Spinner
+                className="mx-2 py-1"
+                animation="border"
+                as="span"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            </Button>
+          ) : (
+            <Button variant="warning" onClick={handleResetPayments}>
+              {" "}
+              Reset Payments{" "}
+            </Button>
+          )}
         </Col>
-        {/* <Col xs="auto">
-          <Form.Text>Sort by Amount</Form.Text>
-        </Col>
-        <Col xs="auto">
-          <Button className={styles.btn} onClick={handleSortDirection}>
-            {sortDirection && <ArrowUpwardIcon />}
-            {!sortDirection && <ArrowDownwardIcon />}
-          </Button>
-        </Col> */}
 
         <Col xs="auto">
           {showSuccess && (

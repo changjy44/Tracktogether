@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PersonalOutstanding from "./PersonalOutstanding";
 import GroupOutstanding from "./GroupOutstanding";
 import Alerts from "./Alerts";
@@ -11,8 +11,12 @@ import {
   Tab,
 } from "react-bootstrap";
 import Box from "../../components/Box";
+import FilterContext from "../../store/FilterContext";
+import PageLoading from "../../components/Loading/PageLoading";
+
 function Outstanding() {
-  return (
+  const filterCtx = useContext(FilterContext);
+  return filterCtx.isDataFetched ? (
     <div className={styles.right}>
       <Box>
         <Tabs
@@ -36,6 +40,12 @@ function Outstanding() {
                 <AdjustmentLogs data={localData} />
               </Tab> */}
         </Tabs>
+      </Box>
+    </div>
+  ) : (
+    <div className={styles.right}>
+      <Box>
+        <PageLoading />
       </Box>
     </div>
   );

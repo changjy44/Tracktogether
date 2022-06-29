@@ -1,4 +1,5 @@
 import Box from "../../components/Box";
+// import ReactLoading from "react-loading";
 import SubmitTransactionModal from "./SubmitTransactionModal";
 import styles from "./Personal.module.css";
 import React, { useState, useRef, useContext, useEffect } from "react";
@@ -21,7 +22,10 @@ import {
   Popover,
   OverlayTrigger,
   Pagination,
+  // Spinner,
 } from "react-bootstrap";
+import PageLoading from "../../components/Loading/PageLoading";
+// import Loading from "../../components/Loading/Loading";
 
 function Personal() {
   const token = localStorage.getItem("token");
@@ -286,7 +290,7 @@ function Personal() {
 
   const [showValidationText, setShowValidationText] = useState(false);
 
-  return (
+  return filterCtx.isDataFetched ? (
     <div className={styles.right}>
       <Box>
         <Row className="align-items-center pb-3">
@@ -421,6 +425,12 @@ function Personal() {
         showValidationText={showValidationText}
         formProps={formProps}
       />
+    </div>
+  ) : (
+    <div className={styles.right}>
+      <Box>
+        <PageLoading />
+      </Box>
     </div>
   );
 }

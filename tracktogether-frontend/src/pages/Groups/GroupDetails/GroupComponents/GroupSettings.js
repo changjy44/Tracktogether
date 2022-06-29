@@ -57,6 +57,7 @@ function GroupSettings() {
 
   function handleChangeGroupDetails() {
     const url = global.baseURL + "/api/group/";
+    setEditGroupNameLoading(true);
     fetch(url, {
       method: "PUT",
       // body: JSON.stringify(base),
@@ -81,6 +82,7 @@ function GroupSettings() {
         const groupName = newGroupData.name;
         grpCtx.updateGroupWithID(groupID, groupName);
         setShowUpdatedMessage(true);
+        setEditGroupNameLoading(false);
         console.log("Group name updated successfully");
       });
   }
@@ -240,6 +242,7 @@ function GroupSettings() {
 
   const [showWarning, setShowWarning] = useState(false);
 
+  const [editGroupNameLoading, setEditGroupNameLoading] = useState(false);
   // console.log(groupInformation);
   // console.log(currGroupName + " is the currgrpname");
 
@@ -305,7 +308,24 @@ function GroupSettings() {
               </Form.Group>
             </Col>
             <Col>
-              <Button onClick={handleChangeGroupDetails}> Save Changes</Button>
+              {editGroupNameLoading ? (
+                <Button variant="primary">
+                  Saving Changes
+                  <Spinner
+                    className="mx-2 py-1"
+                    animation="border"
+                    as="span"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                </Button>
+              ) : (
+                <Button onClick={handleChangeGroupDetails}>
+                  {" "}
+                  Save Changes
+                </Button>
+              )}
             </Col>
           </Row>
         </Col>

@@ -1,35 +1,5 @@
 import React, { useState } from "react";
 
-/* 
-Sample data for use when testing components that depend on Filter Context
-const currData = [
-  {date: '2022-06-01', category: 'Food', amount: 4.5, information: 'Chicken Rice', mode: 'Cash'},
-  {date: '2022-05-03', category: 'Food', amount: 3.3, information: 'Earlier Dinner', mode: 'Cash'},
-  {date: '2022-06-30', category: 'Food', amount: 1.2, information: 'Later Chicken Rice', mode: 'Cash'},
-  {date: '2022-03-31', category: 'Transport', amount: 40, information: 'Top Up Card', mode: 'Bank'},
-  {date: '2021-11-02', category: 'Transport', amount: 30, information: 'Top Up Paylah', mode: 'Bank'}
-]
-const alertData = [
-  {group: '27', user: 'Test', contact: 999, amount: -16.5, payeeHasPaid: false},
-  {group: '27', user: 'Test', contact: 999, amount: -27.5, payeeHasPaid: false},
-  {group: '27', user: 'Test', contact: 999, amount: -38.5, payeeHasPaid: false}
-]
-const adjustmentData = [
-  {date: '2022-06-14T14:41:50.493Z', information: 'Group information not recorded', category: 'Food', amount: -26, mode: 'Groups'},
-  {date: '2022-06-14T14:52:21.124Z', information: 'Group information not recorded', category: 'Food', amount: -82, mode: 'Groups'},
-  {date: '2022-06-14T14:52:49.091Z', information: 'Group information not recorded', category: 'Food', amount: 25.43, mode: 'Groups'},
-  {date: '2022-06-14T14:53:17.727Z', information: 'Group information not recorded', category: 'Food', amount: -66.67, mode: 'Groups'},
-  {date: '2022-06-15T04:30:26.712Z', information: 'Group information not recorded', category: 'Food', amount: -20, mode: 'Groups'}
-]
-const propsFilterData = {
-  currData: currData,
-  alertData: alertData,
-  adjustmentData: adjustmentData
-}
-<FilterContextProvider data={propsFilterData}> 
-</FilterContextProvider>
-*/
-
 const FilterContext = React.createContext({
   optionState: [],
   isDataFetched: false,
@@ -71,13 +41,12 @@ export const FilterContextProvider = (props) => {
   const [logState, setLogState] = useState(0); //0 is trans log, 1 is adjustment log, 2 is both.
 
   // const [dataFetched, setDataFetch] = useState(productionMode ? false : true);
-
+  // const [filterIsLoading, setFilterIsLoading] = useState(false);
   const [dataFetched, setDataFetch] = useState(false);
 
   function fetchAll() {
     const url = global.baseURL + "/api/account/transactions/";
-    console.log("fetching data in personal ");
-    console.log("fetching txnData");
+    // setFilterIsLoading(true);
     const txnData = fetch(url, {
       method: "GET",
       headers: {
@@ -161,6 +130,7 @@ export const FilterContextProvider = (props) => {
         setLocalData(newCurrData);
         setAlertData(newAlerts);
         setAdjustmentData(newAdjustmentData);
+        // setFilterIsLoading(false);
         setDataFetch(true);
       })
       .catch((error) => {
@@ -274,6 +244,7 @@ export const FilterContextProvider = (props) => {
   };
 
   const contextValue = {
+    // filterIsLoading: filterIsLoading,
     isDataFetched: dataFetched,
     optionState: optionState,
     currData: currData,

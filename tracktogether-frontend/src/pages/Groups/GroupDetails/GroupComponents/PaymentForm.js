@@ -10,6 +10,7 @@ import {
   Col,
   ListGroup,
   CloseButton,
+  Spinner,
 } from "react-bootstrap";
 
 function PaymentForm() {
@@ -136,6 +137,7 @@ function PaymentForm() {
       });
     }
     const url = global.baseURL + "/api/group/initiate-payment";
+    setLoading(true);
     fetch(url, {
       method: "POST",
       // body: JSON.stringify(base),
@@ -163,6 +165,7 @@ function PaymentForm() {
         setShowAmountWarning(false);
         setShowMemberWarning(false);
         setShowSelfPaymentWarning(false);
+        setLoading(false);
         refresh();
       });
   }
@@ -244,6 +247,7 @@ function PaymentForm() {
       setLocalData(updatedLocalAmounts);
     };
   }
+  const [loading, setLoading] = useState(false);
 
   const [showSuccessText, setShowSuccessText] = useState(false);
   const [showAmountWarning, setShowAmountWarning] = useState(false);
@@ -391,14 +395,28 @@ function PaymentForm() {
               );
             })}
           </ListGroup>
-          <Button
-            onClick={handleSubmitInitiatePayment}
-            style={{ display: "flex" }}
-            className="my-3"
-          >
-            {" "}
-            Send Transaction Request{" "}
-          </Button>{" "}
+          {loading ? (
+            <Button style={{ display: "flex" }} className="my-3" disabled>
+              Sending Transaction Request
+              <Spinner
+                className="mx-2 my-1"
+                animation="border"
+                as="span"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            </Button>
+          ) : (
+            <Button
+              onClick={handleSubmitInitiatePayment}
+              style={{ display: "flex" }}
+              className="my-3"
+            >
+              Send Transaction Request
+            </Button>
+          )}
+
           {showSuccessText && (
             <p className={styles.success}> Payment successfully initiated!</p>
           )}

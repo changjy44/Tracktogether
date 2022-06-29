@@ -61,6 +61,7 @@ function Profile() {
     }
 
     const url = global.baseURL + "/api/account/";
+    setEditProfileLoading(true);
     fetch(url, {
       method: "PUT",
       body: JSON.stringify({
@@ -91,6 +92,7 @@ function Profile() {
         }
       })
       .then(() => {
+        setEditProfileLoading(false); //might not need tho
         location.reload();
       })
       .catch((err) => {
@@ -179,7 +181,7 @@ function Profile() {
 
   const [showWarning, setShowWarning] = useState(false);
   const [warningText, setShowWarningText] = useState("");
-
+  const [editProfileLoading, setEditProfileLoading] = useState(false);
   return (
     <div className={styles.right}>
       <Box>
@@ -290,9 +292,28 @@ function Profile() {
                 </Col>
               </Row>
               <Stack direction="horizontal" gap={3}>
-                <Button variant="primary" type="submit" onClick={handleSubmit}>
-                  Submit
-                </Button>
+                {editProfileLoading ? (
+                  <Button variant="primary">
+                    Submitting
+                    <Spinner
+                      className="mx-2 py-1"
+                      animation="border"
+                      as="span"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </Button>
+                )}
+
                 <Button onClick={handleEditableState}>Edit Profile</Button>
               </Stack>
             </Form>
