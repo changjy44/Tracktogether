@@ -79,6 +79,7 @@ function Group() {
                 // throw new Error(errorMessage);
                 console.log(data.message);
                 setJoinErrorMessage(data.message);
+                setJoinLoading(false);
               });
             }
           })
