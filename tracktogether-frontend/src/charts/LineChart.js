@@ -113,11 +113,10 @@ export default function LineChart(props) {
         }}
       />
       <VictoryLabel
-        standalone={false}
-        text="Breakdown by Months"
+        text="Breakdown over last 6 months"
         x={50}
-        y={340}
-        style={{ fontSize: 35, fill: "grey" }}
+        dy={10}
+        style={{ fontSize: 28, fill: "grey" }}
       />
       <VictoryLabel
         text="You have no transaction history"
@@ -129,7 +128,6 @@ export default function LineChart(props) {
     </VictoryChart>
   ) : (
     <VictoryChart
-      //   standalone={false}
       containerComponent={
         <VictoryVoronoiContainer
           voronoiDimension="x"
@@ -159,11 +157,10 @@ export default function LineChart(props) {
         y="amount"
       />
       <VictoryLabel
-        standalone={false}
-        text="Breakdown by Months"
+        text="Breakdown over last 6 months"
         x={50}
-        y={340}
-        style={{ fontSize: 35, fill: "grey" }}
+        dy={10}
+        style={{ fontSize: 28, fill: "grey" }}
       />
     </VictoryChart>
   );
