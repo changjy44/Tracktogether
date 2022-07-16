@@ -3,10 +3,14 @@ const db = require("../models");
 // const env = require("../config/env");
 const multer = require("multer");
 const Account = db.account;
+const Classification = db.classification;
 const mongoose = require("mongoose");
 const quotes = require("../utils/quotes.json");
 const cloudinary = require("../utils/cloudinary.js");
 require("dotenv").config();
+
+const ModelFunction = require("./model.controller");
+const categories = ["Food", "Travel", "Entertainment", "Grocery", "Utilities"];
 
 const jwtSecret = process.env.JWT_SECRET;
 function createToken(id, email) {
@@ -461,5 +465,61 @@ exports.getAdjustments = (req, res) => {
         data: { adjustments: obj.groupLog },
       });
     }
+  });
+};
+
+exports.trainClassificationModel = (req, res) => {
+  // const id = req.body._id;
+  const newData = req.body.data;
+  const description = newData.information;
+  const category = retrieveEncoding(newData.category);
+
+  function retrieveEncoding(category) {
+    return categories.findIndex((element) => element === category);
+  }
+
+  const classification = new Classification({
+    description: description,
+    classification: category,
+  });
+
+  classification
+    .save(classification)
+    .then((classification) => {
+      return res.status(200).json({
+        message: "Classification successfully added",
+        data: { classification: classification },
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        message: "Something went wrong! Error: " + err.message,
+        data: {},
+      });
+    });
+};
+
+exports.predictClassification = async (req, res) => {
+  const description = req.body.information;
+
+  //retrieve all
+  const dataset = await Classification.find()
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  const descriptionArray = dataset.map((item) => item.description);
+  const labelArray = dataset.map((item) => item.classification);
+  //call the function
+  ModelFunction.getClassification(descriptionArray, labelArray, [
+    description,
+  ]).then((prediction) => {
+    return res.status(200).json({
+      message: "Successfully predicted!",
+      data: { data: categories[prediction] },
+    });
   });
 };

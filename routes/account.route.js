@@ -56,4 +56,11 @@ router.put("/alerts", auth, accountController.clearAlerts);
 
 router.get("/adjustment", auth, accountController.getAdjustments);
 
+router.post(
+  "/train",
+  /*middleware,*/ accountController.trainClassificationModel
+);
+
+router.post("/predict", accountController.predictClassification);
+
 module.exports = router;
