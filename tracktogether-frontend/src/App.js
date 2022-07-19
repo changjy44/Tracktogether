@@ -8,6 +8,7 @@ import Profile from "./pages/Profile/";
 import Groups from "./pages/Groups/";
 import GroupDetails from "./pages/Groups/GroupDetails";
 import Outstanding from "./pages/Outstanding/";
+import Forecast from "./pages/Forecast";
 import Bank from "./pages/Bank/";
 import AuthContext from "./store/AuthContext";
 import { useContext } from "react";
@@ -47,6 +48,9 @@ function App() {
             )}
             {authCtx.isLoggedIn && (
               <Route path="/outstanding" element={<Outstanding />} />
+            )}
+            {authCtx.isLoggedIn && (
+              <Route path="/forecast" element={<Forecast />} />
             )}
 
             {authCtx.isLoggedIn && (
