@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+const saltedMd5 = require("salted-md5");
+const randomstring = require("randomstring");
+
 const db = require("../models");
 // const env = require("../config/env");
 const multer = require("multer");
@@ -19,6 +22,7 @@ function createToken(id, email) {
 
 exports.createAccount = (req, res) => {
   const username = req.body.username;
+
   Account.findOne({ username: username }, (err, obj) => {
     if (err) {
       return res.status(500).json({
@@ -31,11 +35,15 @@ exports.createAccount = (req, res) => {
         data: {},
       });
     } else {
+      let randomString = randomstring.generate({ length: 8 });
+      let saltedHashPassword = saltedMd5(randomString, req.body.password);
+
       const account = new Account({
         username: req.body.username,
         email: req.body.email,
         contact: req.body.contact,
-        password: req.body.password,
+        password: saltedHashPassword,
+        salt: randomString,
       });
 
       account
@@ -112,7 +120,9 @@ exports.login = (req, res) => {
           data: {},
         });
       } else {
-        if (req.body.password == accountInfo.password) {
+        let saltedHashPassword = saltedMd5(accountInfo.salt, req.body.password);
+
+        if (saltedHashPassword == accountInfo.password) {
           let token = createToken(accountInfo._id, accountInfo.email);
 
           return res.status(200).json({
@@ -464,6 +474,51 @@ exports.getAdjustments = (req, res) => {
         message: "Successfully retrieved user's pending payments.",
         data: { adjustments: obj.groupLog },
       });
+    }
+  });
+};
+
+exports.classificationValidator = (req, res, next) => {
+  const newData = req.body.data;
+  const description = newData.information;
+
+  Classification.findOne({ description: description }, (err, obj) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Something went wrong! Error: " + err.message,
+        data: {},
+      });
+    } else if (!obj) {
+      next();
+    } else {
+      const category = retrieveEncoding(newData.category);
+      function retrieveEncoding(category) {
+        return categories.findIndex((element) => element === category);
+      }
+
+      if (obj.classification === category) {
+        return res.status(200).json({
+          message: "Entry already exists in database with the same category",
+          data: { data: obj },
+        });
+      } else {
+        obj.classification = category;
+        obj
+          .save(obj)
+          .then((objInfo) => {
+            return res.status(200).json({
+              message: "Entry successfully updated",
+              data: { data: objInfo },
+            });
+          })
+          .catch((err) => {
+            return res.status(500).json({
+              message: "Something went wrong! Error: " + err.message,
+              data: {},
+            });
+          });
+      }
+      // console.log(obj);
     }
   });
 };

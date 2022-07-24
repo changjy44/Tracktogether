@@ -58,7 +58,8 @@ router.get("/adjustment", auth, accountController.getAdjustments);
 
 router.post(
   "/train",
-  /*middleware,*/ accountController.trainClassificationModel
+  accountController.classificationValidator,
+  accountController.trainClassificationModel
 );
 
 router.post("/predict", accountController.predictClassification);

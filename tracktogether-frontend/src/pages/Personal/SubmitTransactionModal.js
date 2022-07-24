@@ -1,10 +1,16 @@
 import React from "react";
 import styles from "./Personal.module.css";
-import { Button, Modal, Form, Stack } from "react-bootstrap";
+import { Button, Modal, Form, Stack, Row, Col, Spinner } from "react-bootstrap";
+import SearchIcon from "@mui/icons-material/Search";
 
 function SubmitTransactionModal(props) {
   const formProps = props.formProps;
   const showValidationText = props.showValidationText;
+
+  const isLoading = props.isLoading;
+  const handleClassify = props.handleClassify;
+  const handleCategoryInput = props.handleCategoryInput;
+  const handleTransNameInput = props.handleTransNameInput;
 
   return (
     <Modal show={formProps.transactionForm} onHide={formProps.handleClose}>
@@ -22,23 +28,44 @@ function SubmitTransactionModal(props) {
               placeholder="Enter Date"
             />
           </Form.Group>
+
           <Form.Group className="mb-3" controlId="formBasicTransaction">
             <Form.Label>Transaction name</Form.Label>
-            <Form.Control
-              ref={formProps.transNameInput}
-              placeholder="Enter transaction name"
-            />
+            <Row>
+              <Col>
+                <Form.Control
+                  value={formProps.transNameInput}
+                  onChange={handleTransNameInput}
+                  placeholder="Enter transaction name"
+                />
+              </Col>
+              <Col xs="auto">
+                {isLoading ? (
+                  <Spinner animation="border" />
+                ) : (
+                  <Button onClick={handleClassify}>
+                    <SearchIcon />
+                  </Button>
+                )}
+              </Col>
+            </Row>
+            <Form.Text>
+              {" "}
+              Click on the button to see the recommended category
+            </Form.Text>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCategory">
             <Form.Label>Category</Form.Label>
             <Form.Select
-              ref={formProps.categoryInput}
+              value={formProps.categoryInput}
+              onChange={handleCategoryInput}
               placeholder="Enter category"
             >
               <option> Food </option>
-              <option> Transport </option>
-              <option> Bills </option>
-              <option> Others</option>
+              <option> Travel </option>
+              <option> Entertainment </option>
+              <option> Grocery </option>
+              <option> Utilities </option>
             </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicAmount">

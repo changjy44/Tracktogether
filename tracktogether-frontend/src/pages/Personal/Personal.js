@@ -103,8 +103,10 @@ function Personal() {
   // filterCtx.setSortCategoryHandlerFunction(sortCategoryHandler);
 
   const dateInput = useRef();
-  const transNameInput = useRef();
-  const categoryInput = useRef();
+  // const transNameInput = useRef();
+  // const categoryInput = useRef();
+  const [transNameInput, setTransNameInput] = useState("");
+  const [categoryInput, setCategoryInput] = useState("Food");
   const amountInput = useRef();
   const transModeInput = useRef();
 
@@ -113,8 +115,8 @@ function Personal() {
   const handleTransactionForm = () => setTransactionForm(true);
   const handleAddTransaction = () => {
     const enteredDate = dateInput.current.value;
-    const enteredTransName = transNameInput.current.value;
-    const enteredCategory = categoryInput.current.value;
+    const enteredTransName = transNameInput;
+    const enteredCategory = categoryInput;
     const enteredAmount = amountInput.current.value;
     const enteredTransMode = transModeInput.current.value;
     const newData = {
@@ -131,9 +133,40 @@ function Personal() {
     }
 
     setTransactionForm(false);
-    const url = global.baseURL + "/api/account/transactions/";
-    console.log(url);
-    fetch(url, {
+
+    const trainingUrl = global.baseURL + "/api/account/train/";
+
+    const trainingPromise = fetch(trainingUrl, {
+      method: "POST",
+      body: JSON.stringify({
+        data: newData,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            let errorMessage;
+            console.log(JSON.stringify(data));
+            if (data && data.error && data.error.message) {
+              errorMessage = data.error.message;
+            }
+            console.log(errorMessage);
+
+            throw new Error(errorMessage);
+          });
+        }
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+
+    const txnUrl = global.baseURL + "/api/account/transactions/";
+    const transactionPromise = fetch(txnUrl, {
       method: "PUT",
       body: JSON.stringify({
         data: newData,
@@ -159,13 +192,16 @@ function Personal() {
           });
         }
       })
+      .catch((err) => {
+        alert(err.message);
+      });
+
+    Promise.all([transactionPromise, trainingPromise])
       .then(() => {
-        // setCurrData([...currData, newData]);
-        // setLocalData([...localData, newData]);
         location.reload();
       })
       .catch((err) => {
-        alert(err.message);
+        console.log(err);
       });
   };
 
@@ -184,20 +220,6 @@ function Personal() {
     };
 
     filterCtx.addFilter(json);
-
-    // setFilterArray([
-    //   ...filterArray,
-    //   {
-    //     displayComponent: (
-    //       <FilterComponent
-    //         index={filterArray.length}
-    //         localData={localData}
-    //         setLocalData={setLocalData}
-    //         setActiveTab={setActiveTab}
-    //       />
-    //     ),
-    //   },
-    // ]);
   };
   const removeFilterHandler = () => {
     filterCtx.deleteAllFilter();
@@ -288,7 +310,52 @@ function Personal() {
     // sortCategoryHandler(sortCategory, sortDirection);
   };
 
+  const handleClassify = () => {
+    if (!transNameInput) {
+      return;
+    } else {
+      setIsLoading(true);
+      const url = global.baseURL + "/api/account/predict/";
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          information: transNameInput,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            return res.json().then((data) => {
+              let errorMessage;
+              console.log(JSON.stringify(data));
+              if (data && data.error && data.error.message) {
+                errorMessage = data.error.message;
+              }
+              console.log(errorMessage);
+
+              throw new Error(errorMessage);
+            });
+          }
+        })
+        .then((data) => {
+          // setCurrData([...currData, newData]);
+          // setLocalData([...localData, newData]);
+          setIsLoading(false);
+          setCategoryInput(data.data.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  };
+
   const [showValidationText, setShowValidationText] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   return filterCtx.isDataFetched ? (
     <div className={styles.right}>
@@ -424,6 +491,10 @@ function Personal() {
       <SubmitTransactionModal
         showValidationText={showValidationText}
         formProps={formProps}
+        isLoading={isLoading}
+        handleClassify={handleClassify}
+        handleTransNameInput={(e) => setTransNameInput(e.target.value)}
+        handleCategoryInput={(e) => setCategoryInput(e.target.value)}
       />
     </div>
   ) : (
