@@ -6,7 +6,7 @@ export default function DonutChart(props) {
   const VictoryLabel = Victory.VictoryLabel;
   const VictoryAxis = Victory.VictoryAxis;
   const VictoryChart = Victory.VictoryChart;
-  const graphicColor = ["#1e47f0", "#0096ff", "#00cfff", "#00ffff"];
+  const graphicColor = ["#1e47f0", "#0096ff", "#00cfff", "#00ffff", "#aa00d7"];
 
   function transformData(arr) {
     let temp = arr.reduce((json, current) => {
@@ -27,8 +27,10 @@ export default function DonutChart(props) {
     return arr.map((item) => {
       if (item.category != "Loading...") {
         const container = {};
-        container["category"] = `${item.category}:\n$${item.amount}`;
-        container["amount"] = item.amount;
+        container["category"] = `${item.category}:\n$${Number(
+          item.amount
+        ).toFixed(2)}`;
+        container["amount"] = Math.round(item.amount * 100) / 100;
         return container;
       } else {
         return item;

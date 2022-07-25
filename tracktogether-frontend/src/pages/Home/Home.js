@@ -60,7 +60,6 @@ function Home() {
       await timeout(500);
 
       if (!isCancelled) {
-        console.log("setting all data in Home");
         setData({
           quote: quote_result,
           pieData: filterCtx.localData,

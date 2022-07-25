@@ -37,8 +37,7 @@ export default function LineChart(props) {
   }
   function filterAndSortDates(arr) {
     const filteredArr = arr.filter(
-      (item) =>
-        new Date(`${item._id.year}-${item._id.month}`) >= subtractMonths(6)
+      (item) => new Date(item._id.year, item._id.month) >= subtractMonths(6)
     );
 
     const sortedArr = filteredArr.sort(
@@ -81,11 +80,11 @@ export default function LineChart(props) {
 
     let result = [];
     requiredMonths.forEach((month) => {
-      const item = arr.find((item) => month == months[item._id.month]);
+      const item = arr.find((item) => month === months[item._id.month]);
       if (item) {
         const container = {};
         container["month"] = months[item._id.month];
-        container["amount"] = item.amount;
+        container["amount"] = Math.round(item.amount * 100) / 100;
         result.push(container);
       } else {
         result.push({ month: month, amount: 0 });

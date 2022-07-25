@@ -52,6 +52,7 @@ export default function BarChart(props) {
       <VictoryLabel
         text="Debt Overview"
         x={225}
+        dy={12}
         textAnchor="middle"
         style={{ fontSize: 35, fill: "grey" }}
       />

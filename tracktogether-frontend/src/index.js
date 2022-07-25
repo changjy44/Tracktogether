@@ -8,10 +8,9 @@ import { BrowserRouter } from "react-router-dom";
 // import { FilterContextProvider } from "./store/FilterContext";
 
 const baseURL =
-  // window.location.hostname === "localhost"
-  //   ? "http://localhost:8080"
-  //   :
-  "https://tracktogether.as.r.appspot.com";
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://tracktogether.as.r.appspot.com";
 
 global.baseURL = baseURL;
 
