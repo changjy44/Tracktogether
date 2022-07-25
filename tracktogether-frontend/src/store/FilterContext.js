@@ -62,13 +62,11 @@ export const FilterContextProvider = (props) => {
             entry.information = "Transaction information not recorded";
           }
         });
-        console.log("txnDataDone");
         return newData;
       })
       .catch((error) =>
         setCurrData(`Unable to retrieve quote. Error: ${error}`)
       );
-    console.log("fetching alertData");
     const alertUrl = global.baseURL + "/api/account/alerts/";
     const alertData = fetch(alertUrl, {
       method: "GET",
@@ -79,13 +77,12 @@ export const FilterContextProvider = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("alertDatadone");
         return data.data.pending;
       })
       .catch((error) =>
         setCurrData(`Unable to retrieve quote. Error: ${error}`)
       );
-    console.log("fetching adjustmentData");
+
     const adjustmentUrl = global.baseURL + "/api/account/adjustment/";
     const adjustmentData = fetch(adjustmentUrl, {
       method: "GET",
@@ -112,7 +109,7 @@ export const FilterContextProvider = (props) => {
           };
           return json;
         });
-        console.log("adjustmentDatadone");
+
         return adjustments;
       })
       .catch((error) =>
@@ -121,8 +118,6 @@ export const FilterContextProvider = (props) => {
 
     Promise.all([txnData, alertData, adjustmentData])
       .then((arrayOfData) => {
-        // console.log(arrayOfData);
-        // console.log("arrayOfData");
         const newCurrData = [...arrayOfData[0]];
         const newAlerts = [...arrayOfData[1]];
         const newAdjustmentData = [...arrayOfData[2]];

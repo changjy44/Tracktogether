@@ -21,11 +21,9 @@ export default function GroupOutstanding() {
 
   const handleAcceptNotifications = (entry) => {
     return () => {
-      console.log(entry);
       const grpID = entry.groupID;
       delete entry["groupName"];
       delete entry["groupID"];
-      console.log(entry);
       const url = global.baseURL + "/api/group/acknowledge";
       fetch(url, {
         method: "PUT",

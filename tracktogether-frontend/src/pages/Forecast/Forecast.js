@@ -12,18 +12,9 @@ import React, {
 import AuthContext from "../../store/AuthContext";
 import LineChart from "./PredictionLineChart";
 import { Container, Row, Col, Spinner, Form } from "react-bootstrap";
-import FilterContext from "../../store/FilterContext";
-import GroupContext from "../../store/GroupContext";
 
 function Forecast() {
   const authCtx = useContext(AuthContext);
-  console.log("rendering home");
-  // console.log(authCtx);
-  const filterCtx = useContext(FilterContext);
-  console.log(filterCtx);
-
-  const grpCtx = useContext(GroupContext);
-  console.log(grpCtx);
 
   const [data, setData] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,9 +22,6 @@ function Forecast() {
   const [isDataFetched, setDataFetched] = useState(false);
 
   function filterData(data, budget) {
-    console.log(
-      data.filter((item) => item.amount > budget).map((item) => item.month)
-    );
     return data
       .filter((item) => item.amount > budget)
       .map((item) => item.month);
@@ -66,7 +54,6 @@ function Forecast() {
         console.log(err.message);
       });
   }, [authCtx]);
-  console.log(data);
 
   return (
     <div className={styles.right}>

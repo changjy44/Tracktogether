@@ -19,14 +19,8 @@ import GroupContext from "../../store/GroupContext";
 
 function Home() {
   const authCtx = useContext(AuthContext);
-  console.log("rendering home");
-  // console.log(authCtx);
   const filterCtx = useContext(FilterContext);
-  console.log(filterCtx);
-
   const grpCtx = useContext(GroupContext);
-  console.log(grpCtx);
-
   const initialValues = {
     quote: [],
     pieData: [{ category: "Loading...", amount: 100 }],
@@ -48,7 +42,6 @@ function Home() {
 
   useEffect(() => {
     let isCancelled = false;
-    console.log("entering home useEffect frame");
     const fetchData = async () => {
       const url = global.baseURL + "/api/account/quote";
       const quote_result = await fetch(url, {
@@ -65,7 +58,6 @@ function Home() {
         });
 
       await timeout(500);
-      console.log(isCancelled);
 
       if (!isCancelled) {
         console.log("setting all data in Home");

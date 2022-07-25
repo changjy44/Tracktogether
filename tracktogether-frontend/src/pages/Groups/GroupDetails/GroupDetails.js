@@ -6,7 +6,6 @@ import GroupSettings from "./GroupComponents/GroupSettings";
 import GroupLogs from "./GroupComponents/GroupLog";
 import styles from "../Groups.module.css";
 import React, { useContext } from "react";
-import AuthContext from "../../../store/AuthContext";
 import GroupContext from "../../../store/GroupContext";
 import { useParams } from "react-router-dom";
 import {
@@ -25,8 +24,6 @@ import {
 } from "react-bootstrap";
 
 function GroupDetails() {
-  const authCtx = useContext(AuthContext);
-  console.log(authCtx);
   const grpCtx = useContext(GroupContext);
   //Use this to find the specific route of the group
   const params = useParams();

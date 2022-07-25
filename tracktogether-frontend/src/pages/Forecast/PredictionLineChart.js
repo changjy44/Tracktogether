@@ -8,8 +8,6 @@ export default function LineChart(props) {
   const VictoryTooltip = Victory.VictoryTooltip;
   const VictoryLabel = Victory.VictoryLabel;
 
-  console.log(props.data);
-
   return (
     <VictoryChart
       containerComponent={

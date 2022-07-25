@@ -106,7 +106,6 @@ function Profile() {
     const formData = new FormData();
     formData.append("id", authCtx.id);
     formData.append("image", event.target.files[0]);
-    console.log(formData);
 
     setLoading(true);
 
@@ -135,8 +134,7 @@ function Profile() {
           });
         }
       })
-      .then((data) => {
-        console.log(data.data.account);
+      .then(() => {
         location.reload();
       })
       .catch((err) => {
@@ -170,8 +168,7 @@ function Profile() {
           });
         }
       })
-      .then((data) => {
-        console.log(data.data.account);
+      .then(() => {
         location.reload();
       })
       .catch((err) => {

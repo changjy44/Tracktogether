@@ -20,11 +20,8 @@ export const GroupContextProvider = (props) => {
 
   const [group, setGroup] = useState([]);
   const [dataFetched, setDataFetched] = useState(false);
-
-  console.log(group);
   if (!dataFetched && token != null) {
     const url = global.baseURL + "/api/group/summary/";
-    console.log("fetching data in group context");
     fetch(url, {
       method: "GET",
       headers: {
@@ -49,7 +46,6 @@ export const GroupContextProvider = (props) => {
         }
       })
       .then((data) => {
-        // console.log(data.data.groups);
         setGroup(data.data.groups);
         setDataFetched(true);
       })
@@ -97,7 +93,6 @@ export const GroupContextProvider = (props) => {
         });
       }
     });
-    console.log(userID);
     return userID;
   };
 
@@ -148,7 +143,6 @@ export const GroupContextProvider = (props) => {
   const validateGroupWithID = (groupID) => {
     let newGroupArray = [...group];
     newGroupArray = newGroupArray.map((group) => group.groupID);
-    // console.log(newGroupArray.includes(groupID));
     return newGroupArray.includes(groupID);
   };
 
@@ -170,15 +164,10 @@ export const GroupContextProvider = (props) => {
   };
 
   const accepNotification = (groupID, entry) => {
-    // const entryDate = new Date(entry.date).getTime();
-    // console.log(entryDate);
-    console.log(groupID);
     let newGroupArray = [...group];
     newGroupArray = newGroupArray.map((group) => {
       if (group.groupID.toString() === groupID.toString()) {
         group.log.forEach((log) => {
-          // console.log(new Date(log.date).getTime());
-
           if (new Date(log.date).getTime() === new Date(entry.date).getTime()) {
             log.status = true;
           }

@@ -72,8 +72,6 @@ export const AuthContextProvider = (props) => {
           image: account.image ? account.image.url : "",
         });
         setAuthIsLoading(false);
-
-        console.log("Successfully refreshed!");
       })
       .catch((err) => {
         alert(err.message);

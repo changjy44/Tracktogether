@@ -1,5 +1,4 @@
 import Victory from "./victory";
-// import GroupContext from "../store/GroupContext";
 import { useContext } from "react";
 import AuthContext from "../store/AuthContext";
 
@@ -10,12 +9,7 @@ export default function BarChart(props) {
   const VictoryChart = Victory.VictoryChart;
   const VictoryLabel = Victory.VictoryLabel;
 
-  // const grpCtx = useContext(GroupContext);
-  // console.log(grpCtx);
-
   const authCtx = useContext(AuthContext);
-
-  console.log(props.data);
   function transformData(arr) {
     let temp = arr.map((group) => {
       const container = {};
@@ -35,7 +29,6 @@ export default function BarChart(props) {
       fill: netSum >= 0 ? "turquoise" : "pink",
     };
     temp.unshift(netJson);
-    console.log(temp);
     return temp;
   }
 
@@ -95,7 +88,6 @@ export default function BarChart(props) {
         }
         animate
         data={transformData(props.data)}
-        //   y="total"
         style={{
           data: { fill: ({ datum }) => datum.fill },
         }}

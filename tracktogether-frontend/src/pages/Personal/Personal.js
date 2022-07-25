@@ -126,7 +126,6 @@ function Personal() {
       information: enteredTransName,
       mode: enteredTransMode,
     };
-    console.log(newData);
     if (enteredDate === "" || enteredAmount === "") {
       setShowValidationText(true);
       return;

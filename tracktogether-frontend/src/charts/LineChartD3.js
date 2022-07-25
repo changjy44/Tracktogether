@@ -22,7 +22,6 @@ const MultilineChart = ({ inputData, dimensions }) => {
       }
       return json;
     }, {});
-    console.log(Object.values(temp));
     return Object.values(temp);
   }
 
@@ -34,13 +33,11 @@ const MultilineChart = ({ inputData, dimensions }) => {
     }
     return date;
   }
-  // console.log(props);
   function filterAndSortDates(arr) {
     const filteredArr = arr.filter(
       (item) =>
         new Date(`${item._id.year}-${item._id.month}`) >= subtractMonths(6)
     );
-    // console.log(filtered_arr);
 
     const sortedArr = filteredArr.sort(
       (a, b) =>
@@ -93,7 +90,6 @@ const MultilineChart = ({ inputData, dimensions }) => {
             obj["amount"] = item[category];
             return obj;
           });
-    // console.log(filteredArr);
     let result = [];
     requiredDate.forEach((date) => {
       const item = filteredArr.find(
@@ -126,7 +122,6 @@ const MultilineChart = ({ inputData, dimensions }) => {
     { name: "Bills", color: "#ffffff", data: billsData },
     { name: "Others", color: "#ffffff", data: othersData },
   ];
-  console.log(data);
 
   //starting to plot chart
   const svgRef = useRef(null);

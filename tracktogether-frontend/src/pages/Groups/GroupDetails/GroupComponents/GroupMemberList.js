@@ -28,7 +28,6 @@ import {
 function GroupMemberList() {
   const initialToken = localStorage.getItem("token");
   const authCtx = useContext(AuthContext);
-  console.log(authCtx);
   const filterCtx = useContext(FilterContext);
   const grpCtx = useContext(GroupContext);
 
@@ -128,7 +127,6 @@ function GroupMemberList() {
       .then((data) => {
         const newGroupData = data.data.group;
         grpCtx.updateGroupInformation(groupID, newGroupData);
-        console.log("Successfully reset payment");
         setShowWarning(false);
         setShowSuccess(true);
         setLoading(false);

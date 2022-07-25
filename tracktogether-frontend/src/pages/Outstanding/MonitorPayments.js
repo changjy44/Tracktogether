@@ -7,7 +7,6 @@ import styles from "./Outstanding.module.css";
 
 export default function MonitorPayments() {
   const initialToken = localStorage.getItem("token");
-  // console.log(initialToken);
   const authCtx = useContext(AuthContext);
   const filterCtx = useContext(FilterContext);
 
@@ -20,7 +19,6 @@ export default function MonitorPayments() {
   }, [filterCtx]);
 
   function handleReceivedPayment(index) {
-    console.log("clicked button");
     return () => {
       const entry = alert[index];
       const url = global.baseURL + "/api/account/alerts";
@@ -44,10 +42,6 @@ export default function MonitorPayments() {
           }
         })
         .then(() => {
-          console.log("received data");
-          // const newGroupData = data.data;
-          // grpCtx.updateGroupInformation(groupID, newGroupData);
-          // grpCtx.updateGroupMemberListWithID(groupID, username);
           const newAlert = [...alert];
           newAlert.splice(index, 1);
           setAlert(newAlert);

@@ -12,12 +12,10 @@ function GroupSettings() {
   const initialToken = localStorage.getItem("token");
   const authCtx = useContext(AuthContext);
   const grpCtx = useContext(GroupContext);
-  console.log(authCtx);
   const groupID = parseInt(useParams().groupID);
 
   const groupImageURL = grpCtx.findImageWithID(groupID);
   const groupInformation = grpCtx.findGroupWithID(groupID);
-  console.log(groupImageURL);
 
   const [deleteShow, setDeleteShow] = useState(false);
   const [leaveShow, setLeaveShow] = useState(false);
@@ -32,16 +30,11 @@ function GroupSettings() {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    console.log("groupCtx has changed!");
-
     const groupInformation = grpCtx.findGroupWithID(groupID);
     const groupImageURL = grpCtx.findImageWithID(groupID);
-    // console.log(groupInformation);
     setCurrGroupName(groupInformation.name);
     setGroupImage(groupImageURL);
   }, [grpCtx]);
-
-  // console.log(setCurrGroupName);
 
   function handleOpen(name) {
     return () => {
@@ -181,8 +174,7 @@ function GroupSettings() {
           });
         }
       })
-      .then((data) => {
-        console.log(data.data.account);
+      .then(() => {
         location.reload();
       })
       .catch((err) => {
@@ -243,8 +235,6 @@ function GroupSettings() {
   const [showWarning, setShowWarning] = useState(false);
 
   const [editGroupNameLoading, setEditGroupNameLoading] = useState(false);
-  // console.log(groupInformation);
-  // console.log(currGroupName + " is the currgrpname");
 
   return (
     <div className={styles.newApp}>

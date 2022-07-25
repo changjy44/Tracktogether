@@ -16,7 +16,6 @@ import {
 function PaymentForm() {
   const initialToken = localStorage.getItem("token");
   const authCtx = useContext(AuthContext);
-  console.log(authCtx);
   const grpCtx = useContext(GroupContext);
 
   const groupID = useParams().groupID;
@@ -119,8 +118,6 @@ function PaymentForm() {
         json.status = true;
         json.amount = Number(json.amount) - Number(totalAmount);
       }
-      console.log(totalAmount);
-      console.log(json.amount);
       return json;
     });
 

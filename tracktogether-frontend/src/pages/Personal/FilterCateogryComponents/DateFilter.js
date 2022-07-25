@@ -49,7 +49,6 @@ function DateFilter(props) {
   };
 
   const handleMonth = (e) => {
-    // console.log(currMonth);
     filterCtx.changeMonth(index, e.target.value);
     const newData = filterCtx.filterAll(filterCtx.logState);
     setLocalData(newData);

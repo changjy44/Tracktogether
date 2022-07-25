@@ -3,8 +3,6 @@ import Victory from "./victory";
 export default function DonutChart(props) {
   const VictoryPie = Victory.VictoryPie;
   const VictoryTooltip = Victory.VictoryTooltip;
-  // const VictoryLegend = Victory.VictoryLegend;
-  // const VictoryContainer = Victory.VictoryContainer;
   const VictoryLabel = Victory.VictoryLabel;
   const VictoryAxis = Victory.VictoryAxis;
   const VictoryChart = Victory.VictoryChart;

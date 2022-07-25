@@ -35,13 +35,11 @@ export default function LineChart(props) {
     }
     return date;
   }
-  // console.log(props);
   function filterAndSortDates(arr) {
     const filteredArr = arr.filter(
       (item) =>
         new Date(`${item._id.year}-${item._id.month}`) >= subtractMonths(6)
     );
-    // console.log(filtered_arr);
 
     const sortedArr = filteredArr.sort(
       (a, b) =>
@@ -93,15 +91,12 @@ export default function LineChart(props) {
         result.push({ month: month, amount: 0 });
       }
     });
-    // console.log(result);
     return result;
   }
 
   function transform_data(arr) {
     return mapMonthToValue(filterAndSortDates(groupByDates(arr)));
   }
-
-  console.log("entered linechart component");
 
   return props.data.length == 0 ? (
     <VictoryChart>

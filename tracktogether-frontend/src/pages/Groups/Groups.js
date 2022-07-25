@@ -27,21 +27,15 @@ function Group() {
   const groupCtx = useContext(GroupContext);
   const navigate = useNavigate();
 
-  console.log(authCtx);
-  console.log(groupCtx);
-
   // const [groups, setGroups] = useState([]);
   const groups = groupCtx.group;
   const setGroups = groupCtx.setGroup;
   const [groupToJoin, setGroupToJoin] = useState(null);
   const [joinErrorMessage, setJoinErrorMessage] = useState("");
 
-  console.log(groups);
-
   function childToParent(childdata) {
     const newGroups = [...groups];
     newGroups.push(childdata);
-    console.log(newGroups);
     setGroups(newGroups);
   }
 
@@ -70,13 +64,6 @@ function Group() {
               return res.json();
             } else {
               return res.json().then((data) => {
-                // let errorMessage;
-                // console.log(JSON.stringify(data));
-                // if (data && data.error && data.error.message) {
-                //   errorMessage = data.error.message;
-                // }
-                // console.log(errorMessage);
-                // throw new Error(errorMessage);
                 console.log(data.message);
                 setJoinErrorMessage(data.message);
                 setJoinLoading(false);
@@ -86,7 +73,6 @@ function Group() {
           .then((data) => {
             const newGroups = [...groups];
             newGroups.push(data.data.group);
-            console.log(newGroups);
             setJoinLoading(false);
             setGroups(newGroups);
           });
