@@ -4,10 +4,10 @@ export default function DonutChart(props) {
   const VictoryPie = Victory.VictoryPie;
   const VictoryTooltip = Victory.VictoryTooltip;
   // const VictoryLegend = Victory.VictoryLegend;
-  const VictoryContainer = Victory.VictoryContainer;
+  // const VictoryContainer = Victory.VictoryContainer;
   const VictoryLabel = Victory.VictoryLabel;
-  // const VictoryAxis = Victory.VictoryAxis;
-  // const VictoryChart = Victory.VictoryChart;
+  const VictoryAxis = Victory.VictoryAxis;
+  const VictoryChart = Victory.VictoryChart;
   const graphicColor = ["#1e47f0", "#0096ff", "#00cfff", "#00ffff"];
 
   function transformData(arr) {
@@ -39,14 +39,21 @@ export default function DonutChart(props) {
   }
 
   return (
-    <VictoryContainer width={250} height={250} style={{ paddingTop: 40 }}>
+    <VictoryChart width={150} height={150}>
+      <VictoryAxis
+        style={{
+          axis: { stroke: "transparent" },
+          ticks: { stroke: "transparent" },
+          tickLabels: { fill: "transparent" },
+        }}
+      />
       <VictoryLabel
         standalone={false}
         text="Breakdown by Category"
-        x={120}
-        y={25}
+        x={75}
+        dy={27}
         textAnchor="middle"
-        style={{ fontSize: 20, fill: "grey" }}
+        style={{ fontSize: 11, fill: "grey" }}
       />
       {props.data.length == 0 ? (
         <VictoryPie
@@ -57,10 +64,7 @@ export default function DonutChart(props) {
               }}
             />
           }
-          standalone={false}
           animate={{ easing: "exp" }}
-          width={240}
-          height={240}
           data={[{ x: "No data", y: 100 }]}
           colorScale={["grey"]}
           innerRadius={40}
@@ -69,6 +73,8 @@ export default function DonutChart(props) {
         <VictoryPie
           labelComponent={
             <VictoryTooltip
+              pointerLength={0}
+              style={{ fontSize: "8px" }}
               flyoutStyle={{
                 fill: "white",
               }}
@@ -79,12 +85,10 @@ export default function DonutChart(props) {
           data={concatenateLabels(transformData(props.data))}
           x="category"
           y="amount"
-          width={240}
-          height={240}
           colorScale={graphicColor}
           innerRadius={40}
         />
       )}
-    </VictoryContainer>
+    </VictoryChart>
   );
 }

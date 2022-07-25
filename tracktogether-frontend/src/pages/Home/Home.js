@@ -1,5 +1,4 @@
 //import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
 import Box from "../../components/Box";
 import styles from "./Home.module.css";
 import React, {
@@ -16,6 +15,7 @@ import LineChart from "../../charts/LineChart";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import FilterContext from "../../store/FilterContext";
 import GroupContext from "../../store/GroupContext";
+// import MultilineChart from "../../charts/LineChartD3";
 
 function Home() {
   const authCtx = useContext(AuthContext);
@@ -103,6 +103,14 @@ function Home() {
               style={{ position: "relative" }}
             >
               {data.quote.length != 0 ? (
+                // <MultilineChart
+                //   inputData={data.lineData}
+                //   dimensions={{
+                //     width: 600,
+                //     height: 300,
+                //     margin: { top: 30, right: 30, bottom: 30, left: 60 },
+                //   }}
+                // />
                 <LineChart data={data.lineData} />
               ) : (
                 <div className={styles.spinner}>
