@@ -106,7 +106,7 @@ function Personal() {
   // const transNameInput = useRef();
   // const categoryInput = useRef();
   const [transNameInput, setTransNameInput] = useState("");
-  const [categoryInput, setCategoryInput] = useState("Food");
+  const [categoryInput, setCategoryInput] = useState("");
   const amountInput = useRef();
   const transModeInput = useRef();
 
@@ -315,6 +315,21 @@ function Personal() {
     } else {
       setIsLoading(true);
       const url = global.baseURL + "/api/account/predict/";
+
+      const unitTime = 100;
+      const totalTime = 15250;
+      const increment = (100 * unitTime) / totalTime;
+
+      const interval = setInterval(() => {
+        setCurrProgress((oldValue) => {
+          const newValue = oldValue + increment;
+          if (newValue === 100) {
+            clearInterval(interval);
+          }
+          return newValue;
+        });
+      }, unitTime);
+
       fetch(url, {
         method: "POST",
         body: JSON.stringify({
@@ -345,6 +360,14 @@ function Personal() {
           // setLocalData([...localData, newData]);
           setIsLoading(false);
           setCategoryInput(data.data.data);
+          clearInterval(interval);
+          setClickedClassify(true);
+          setCurrProgress((number) => {
+            if (!number) {
+              return 0;
+            }
+            return 0;
+          });
         })
         .catch((err) => {
           alert(err.message);
@@ -355,6 +378,10 @@ function Personal() {
   const [showValidationText, setShowValidationText] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [currProgress, setCurrProgress] = useState(0);
+
+  const [clickedClassify, setClickedClassify] = useState(false);
 
   return filterCtx.isDataFetched ? (
     <div className={styles.right}>
@@ -494,6 +521,8 @@ function Personal() {
         handleClassify={handleClassify}
         handleTransNameInput={(e) => setTransNameInput(e.target.value)}
         handleCategoryInput={(e) => setCategoryInput(e.target.value)}
+        currProgress={currProgress}
+        clickedClassify={clickedClassify}
       />
     </div>
   ) : (

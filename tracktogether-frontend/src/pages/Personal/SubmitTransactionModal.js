@@ -1,6 +1,15 @@
 import React from "react";
 import styles from "./Personal.module.css";
-import { Button, Modal, Form, Stack, Row, Col, Spinner } from "react-bootstrap";
+import {
+  Button,
+  Modal,
+  Form,
+  Stack,
+  Row,
+  Col,
+  Spinner,
+  ProgressBar,
+} from "react-bootstrap";
 import SearchIcon from "@mui/icons-material/Search";
 
 function SubmitTransactionModal(props) {
@@ -11,6 +20,8 @@ function SubmitTransactionModal(props) {
   const handleClassify = props.handleClassify;
   const handleCategoryInput = props.handleCategoryInput;
   const handleTransNameInput = props.handleTransNameInput;
+  const currProgress = props.currProgress;
+  const clickedClassify = props.clickedClassify;
 
   return (
     <Modal show={formProps.transactionForm} onHide={formProps.handleClose}>
@@ -49,6 +60,7 @@ function SubmitTransactionModal(props) {
                 )}
               </Col>
             </Row>
+            <ProgressBar className="mt-2" now={currProgress} />
             <Form.Text>
               {" "}
               Click on the button to see the recommended category
@@ -56,17 +68,24 @@ function SubmitTransactionModal(props) {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCategory">
             <Form.Label>Category</Form.Label>
-            <Form.Select
-              value={formProps.categoryInput}
-              onChange={handleCategoryInput}
-              placeholder="Enter category"
-            >
-              <option> Food </option>
-              <option> Travel </option>
-              <option> Entertainment </option>
-              <option> Grocery </option>
-              <option> Utilities </option>
-            </Form.Select>
+            {clickedClassify ? (
+              <Form.Select
+                value={formProps.categoryInput}
+                onChange={handleCategoryInput}
+                placeholder="Enter category"
+              >
+                <option> Food </option>
+                <option> Travel </option>
+                <option> Entertainment </option>
+                <option> Grocery </option>
+                <option> Utilities </option>
+              </Form.Select>
+            ) : (
+              <Form.Control
+                placeholder="Predicted category will be shown here"
+                disabled
+              />
+            )}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicAmount">
             <Form.Label>Amount</Form.Label>
@@ -78,7 +97,6 @@ function SubmitTransactionModal(props) {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicMode">
             <Form.Label>Transaction mode</Form.Label>
-
             <Form.Select
               ref={formProps.transModeInput}
               placeholder="Enter transaction mode"

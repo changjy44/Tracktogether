@@ -113,10 +113,6 @@ function Navigator() {
               <NavDropdown.Item href="/bank-sync">
                 Sync to Bank Account
               </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/profile">
-                Delete Account
-              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Stack>

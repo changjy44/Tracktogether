@@ -287,43 +287,36 @@ function Profile() {
                     />
                   </Form.Group>
                 </Col>
-              </Row>
-              <Stack direction="horizontal" gap={3}>
-                {editProfileLoading ? (
-                  <Button variant="primary">
-                    Submitting
-                    <Spinner
-                      className="mx-2 py-1"
-                      animation="border"
-                      as="span"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                  </Button>
-                ) : (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </Button>
-                )}
+                <Col className="pt-4 mt-2" xs="auto">
+                  <Stack direction="horizontal" gap={3}>
+                    {editProfileLoading ? (
+                      <Button variant="primary">
+                        Submitting
+                        <Spinner
+                          className="mx-2 py-1"
+                          animation="border"
+                          as="span"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </Button>
+                    )}
 
-                <Button onClick={handleEditableState}>Edit Profile</Button>
-              </Stack>
+                    <Button onClick={handleEditableState}>Edit Profile</Button>
+                  </Stack>
+                </Col>
+              </Row>
             </Form>
 
-            <Stack direction="horizontal" gap={3} className="pb-3">
-              <Button className="mt-3" disabled>
-                {" "}
-                Change Password
-              </Button>
-              <Button variant="danger" className="mt-3" disabled>
-                Delete Account{" "}
-              </Button>
-            </Stack>
             {showWarning && <p className={styles.warning}> {warningText} </p>}
           </Col>
         </Row>

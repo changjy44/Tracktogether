@@ -92,9 +92,13 @@ function Forecast() {
                     <LineChart data={data.rnn_data} type="rnn" />
                   )
                 ) : (
-                  <div className={styles.spinner}>
-                    <Spinner animation="border" variant="primary" />
-                  </div>
+                  // {/* <h4 className="p-5 ml-auto mr-auto"> Loading... </h4> */}
+
+                  <Spinner
+                    className="p-5 ml-auto mr-auto"
+                    animation="border"
+                    variant="primary"
+                  />
                 )}
               </div>
               <div>
@@ -163,9 +167,11 @@ function Forecast() {
                     <LineChart data={data.sarima_data} type="sarima" />
                   )
                 ) : (
-                  <div className={styles.spinner}>
-                    <Spinner animation="border" variant="primary" />
-                  </div>
+                  <Spinner
+                    className="p-5 ml-auto mr-auto"
+                    animation="border"
+                    variant="primary"
+                  />
                 )}
               </div>
               <div>
