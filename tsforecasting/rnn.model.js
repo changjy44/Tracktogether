@@ -155,8 +155,68 @@ function makePredictions(X, model, dict_normalize) {
   return Array.from(predictedResults.dataSync());
 }
 
+//modfiable parameters
+const window_size = 6;
+const training_size = 70;
+const n_epochs = 5;
+const learning_rate = 0.01;
+const n_layers = 4;
+const batch_size = 30;
+
+async function runModel(data) {
+  let sma_vec = computeSMA(data, window_size);
+
+  let inputs = sma_vec.map((item) => {
+    return item["set"];
+  });
+  let outputs = sma_vec.map((item) => {
+    return item["avg"];
+  });
+
+  const model_params = {
+    inputs: inputs,
+    outputs: outputs,
+    training_size: training_size,
+    n_epochs: n_epochs,
+    learning_rate: learning_rate,
+    n_layers: n_layers,
+    window_size: window_size,
+  };
+
+  let callback = function (epoch, log) {
+    console.log(
+      "Epoch :" +
+        (epoch + 1) +
+        " (of " +
+        model_params["n_epochs"] +
+        ")" +
+        ", loss: " +
+        log.loss
+    );
+  };
+  let model = await trainModel(model_params, callback);
+  console.log(model);
+  let pred_X = [inputs[inputs.length - 1]];
+  let predArr = [];
+  let pred_Y = 0;
+
+  for (let i = 0; i < 12; i++) {
+    if (i !== 0) {
+      let temp_pred_X = [...pred_X][0];
+      temp_pred_X.shift();
+      temp_pred_X.push(pred_Y[0]);
+      pred_X = [temp_pred_X];
+    }
+    pred_Y = await makePredictions(pred_X, model["model"], model["normalize"]);
+    predArr.push(pred_Y[0]);
+  }
+  console.log(predArr);
+  return predArr;
+}
+
 module.exports = {
   computeSMA,
   trainModel,
   makePredictions,
+  runModel,
 };

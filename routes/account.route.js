@@ -56,4 +56,6 @@ router.put("/alerts", auth, accountController.clearAlerts);
 
 router.get("/adjustment", auth, accountController.getAdjustments);
 
+router.get("/tspredict", auth, accountController.getPrediction);
+
 module.exports = router;

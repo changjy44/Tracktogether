@@ -8,6 +8,10 @@ const quotes = require("../utils/quotes.json");
 const cloudinary = require("../utils/cloudinary.js");
 require("dotenv").config();
 
+const rnnFunctions = require("../tsforecasting/rnn.model");
+const arimaFunctions = require("../tsforecasting/arima.model");
+const helperFunctions = require("../tsforecasting/validation");
+
 const jwtSecret = process.env.JWT_SECRET;
 function createToken(id, email) {
   return jwt.sign({ id: id, email: email }, jwtSecret);
@@ -462,4 +466,58 @@ exports.getAdjustments = (req, res) => {
       });
     }
   });
+};
+
+exports.getPrediction = (req, res) => {
+  let id = mongoose.Types.ObjectId(req.body._id);
+
+  Account.aggregate(
+    [
+      { $unwind: "$transactions" },
+      { $match: { _id: id } },
+      {
+        $group: {
+          _id: {
+            month: { $month: { $toDate: "$transactions.date" } },
+            year: { $year: { $toDate: "$transactions.date" } },
+          },
+          amount: { $sum: "$transactions.amount" },
+        },
+      },
+    ],
+    async function (err, results) {
+      if (err) {
+        return res.status(500).json({
+          message: "Something went wrong! Error: " + err.message,
+          data: {},
+        });
+      } else if (!results) {
+        return res.status(404).json({
+          message: "No such account found.",
+          data: {},
+        });
+      } else if (!helperFunctions.validateData(results)) {
+        return res.status(500).json({
+          message:
+            "Insufficient data! Please have at least 24 non-zero spending months.",
+          data: { rnn_data: [], sarima_data: [] },
+        });
+      } else {
+        // let data = results.map((item) => item.amount);
+        let data = helperFunctions.transformInputData(results);
+
+        const rnnPrediction = helperFunctions.transformOutputData(
+          await rnnFunctions.runModel(data)
+        );
+        const sarimaPrediction = helperFunctions.transformOutputData(
+          await arimaFunctions.runModel(data)
+        );
+
+        return res.status(200).json({
+          message: "Predicted spending for next 12 months using RNN and SARIMA",
+          data: { rnn_data: rnnPrediction, sarima_data: sarimaPrediction },
+        });
+      }
+    }
+  );
 };

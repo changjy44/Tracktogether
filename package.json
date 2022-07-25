@@ -12,6 +12,7 @@
   "dependencies": {
     "@tensorflow/tfjs": "^3.18.0",
     "@tensorflow/tfjs-node": "^3.18.0",
+    "arima": "^0.2.5",
     "cloudinary": "^1.30.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",

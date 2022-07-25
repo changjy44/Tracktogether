@@ -120,9 +120,38 @@ function Forecast() {
                     <span>
                       RNN model warns that you might exceed your budget of $
                       {budget} in the upcoming months:
-                      {filterData(data.rnn_data, budget).map((entry) => (
-                        <li>{entry}</li>
-                      ))}
+                      <Row>
+                        {filterData(data.rnn_data, budget).slice(0, 4).length >
+                        0 ? (
+                          <Col>
+                            {filterData(data.rnn_data, budget)
+                              .slice(0, 4)
+                              .map((entry) => (
+                                <li>{entry}</li>
+                              ))}
+                          </Col>
+                        ) : null}
+                        {filterData(data.rnn_data, budget).slice(4, 8).length >
+                        0 ? (
+                          <Col>
+                            {filterData(data.rnn_data, budget)
+                              .slice(4, 8)
+                              .map((entry) => (
+                                <li>{entry}</li>
+                              ))}
+                          </Col>
+                        ) : null}
+                        {filterData(data.rnn_data, budget).slice(8, 12).length >
+                        0 ? (
+                          <Col>
+                            {filterData(data.rnn_data, budget)
+                              .slice(8, 12)
+                              .map((entry) => (
+                                <li>{entry}</li>
+                              ))}
+                          </Col>
+                        ) : null}
+                      </Row>
                     </span>
                   )
                 ) : null}
@@ -162,9 +191,38 @@ function Forecast() {
                     <span>
                       SARIMA model warns that you might exceed your budget of $
                       {budget} in the upcoming months:
-                      {filterData(data.sarima_data, budget).map((entry) => (
-                        <li>{entry}</li>
-                      ))}
+                      <Row>
+                        {filterData(data.sarima_data, budget).slice(0, 4)
+                          .length > 0 ? (
+                          <Col>
+                            {filterData(data.sarima_data, budget)
+                              .slice(0, 4)
+                              .map((entry) => (
+                                <li>{entry}</li>
+                              ))}
+                          </Col>
+                        ) : null}
+                        {filterData(data.sarima_data, budget).slice(4, 8)
+                          .length > 0 ? (
+                          <Col>
+                            {filterData(data.sarima_data, budget)
+                              .slice(4, 8)
+                              .map((entry) => (
+                                <li>{entry}</li>
+                              ))}
+                          </Col>
+                        ) : null}
+                        {filterData(data.sarima_data, budget).slice(8, 12)
+                          .length > 0 ? (
+                          <Col>
+                            {filterData(data.sarima_data, budget)
+                              .slice(8, 12)
+                              .map((entry) => (
+                                <li>{entry}</li>
+                              ))}
+                          </Col>
+                        ) : null}
+                      </Row>
                     </span>
                   )
                 ) : null}
