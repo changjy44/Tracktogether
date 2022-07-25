@@ -85,6 +85,14 @@ function SideNavigator() {
                 Outstanding
               </CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to="/forecast" activeClassName="activeClicked">
+              <CDBSidebarMenuItem
+                icon="chart-line"
+                active={matchPath(location.pathname, "/forecast")}
+              >
+                Forecasting
+              </CDBSidebarMenuItem>
+            </NavLink>
           </CDBSidebarMenu>{" "}
           <hr />
           <NavLink

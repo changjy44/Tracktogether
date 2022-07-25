@@ -63,5 +63,6 @@ router.post(
 );
 
 router.post("/predict", accountController.predictClassification);
+router.get("/tspredict", auth, accountController.getPrediction);
 
 module.exports = router;
